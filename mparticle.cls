@@ -1,6 +1,6 @@
 %%
 %% mparticle, an attempt at a fancier article style
-%% @(#) $Id: mparticle.cls,v 1.4 1999-06-04 15:55:27+02 mxp Exp mxp $
+%% @(#) $Id: mparticle.cls,v 1.5 1999/06/04 16:07:21 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option.
 
@@ -156,7 +156,7 @@
      }%
    \subsectionmark{#1}%
    \@mywritetorep{#1}{subsection.\thesubsection}{section.\thesection}
-   \vspace*{.5\baselineskip}%
+   \par
    }
 
    \newcommand{\@ssubsection}[1]%        % for subsection*{...}
@@ -166,7 +166,7 @@
      {%
        \large\bfseries\sffamily#1
      }%
-     \vspace*{.5\baselineskip}%
+     \par
    }
 
 % It redefines |\subsubsection|.
