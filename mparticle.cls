@@ -1,12 +1,12 @@
 %%
 %% mparticle, an attempt at a fancier article style
-%% @(#) $Id: mparticle.cls,v 1.7 2000/09/30 11:41:41 mxp Exp mxp $
+%% @(#) $Id: mparticle.cls,v 1.8 2002/01/07 12:02:12 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option.
 
 %% The class begins by announcing itself as |mparticle.cls|.
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{mparticle}[1999/06/04 A variant article class]
+\ProvidesClass{mparticle}[2002/01/07 A variant article class]
 
 %% It passes all options on to the |article| class.
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
