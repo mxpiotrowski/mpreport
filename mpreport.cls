@@ -1,23 +1,52 @@
-%
-% mpreport, an attempt at a fancier report style
-% @(#) $Id: mpreport.cls,v 1.3 1999-06-04 10:52:46+02 mxp Exp mxp $
+%%%
+%%% mpreport, an attempt at a fancier report style
+%%% @(#) $Id: mpreport.cls,v 1.4 1999-06-04 11:48:50+02 mxp Exp mxp $
 
-% NOTE:  This class automatically specifies the a4paper option and
-%        loads the graphicx package.
+%%% NOTE:  This class automatically specifies the a4paper option and
+%%%        loads the graphicx package.
 
-% The class begins by announcing itself as |mpreport.cls|.
-   \NeedsTeXFormat{LaTeX2e}
-   \ProvidesClass{mpreport}[1999/06/04 A variant report class]
+%%% The class begins by announcing itself as |mpreport.cls|.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{mpreport}[1999/06/04 A variant report class]
 
-% It passes all specified options on to the |report| class.
-   \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
-   \ProcessOptions
+%%% The class has one option, ``hyperref,'' to enable special hacks
+%%% for hyperref.  Specify it if you want PDF bookmarks for sections and
+%%% subsections.
+\usepackage{ifthen}
+\newboolean{hyperref}
+\setboolean{hyperref}{false}
+\DeclareOption{hyperref}{\setboolean{hyperref}{true}}
 
-% It then loads the class |report|.
-   \LoadClass[a4paper]{report}
-   \usepackage{graphicx}
+%%% It passes all other options on to the |report| class.
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
+\ProcessOptions
 
-% The class then redefines |\maketitle|.
+%%% It then loads the class |report| and the graphicx package.
+\LoadClass[a4paper]{report}
+\usepackage{graphicx}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% This is hacked code from the hyperref package
+\ifthenelse{\boolean{hyperref}}%
+{
+  \def\@mywritetorep#1#2#3{%
+    \ifx\WriteBookmarks\relax\else
+    \protected@write\@outlinefile%
+    {\let~\space
+      \def\LaTeX{LaTeX}%
+      \def\eTeX{e-TeX}%
+      \def\TeX{TeX}%
+      \let\label\@gobble
+      \let\index\@gobble
+      \let\glossary\@gobble}%
+    {\protect\BOOKMARK{#2}{#1}{#3}}%
+    \fi}}
+{\def\@mywritetorep#1#2#3{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% The class then redefines |\maketitle|.
    \if@titlepage
    \renewcommand{\maketitle}{%
      \begin{titlepage}%
@@ -123,7 +152,7 @@
        }%
      }
      
-% It redefines |\section|.
+%%% It redefines |\section|.
    \renewcommand{\section}{\secdef\@section\@ssection}
 
    \newlength{\mp@headht}
@@ -138,6 +167,7 @@
           \par\vspace*{-.5\baselineskip}%
           \hspace{-\mp@margwd}%
           \large\bfseries\sffamily\thesection~#2
+          \@mywritetorep{#1}{section.\thesection}{chapter.\thechapter}
      }%
      \sectionmark{#1}%
      \vspace*{\baselineskip}%
@@ -155,11 +185,38 @@
    }
 
 % It redefines |\subsection|.
-   \renewcommand{\subsection}{%
-     \@startsection
-     {subsection}{2}{0pt}{-1.5ex plus -1ex minus -.2ex}%
-     {1ex plus .2ex}{\fontseries{mc}\normalsize\bfseries\sffamily}%
-     }
+% Normally, all we had to do was to say:
+%   \renewcommand{\subsection}{%
+%     \@startsection
+%     {subsection}{2}{0pt}{-1.5ex plus -1ex minus -.2ex}%
+%     {1ex plus .2ex}{\fontseries{mc}\normalsize\bfseries\sffamily}%
+%     }
+% But with hyperref hacking we need the following:
+ \renewcommand{\subsection}{\secdef\@subsection\@ssubsection%
+   }
+ \newcommand{\@subsection}[2][?]%
+ {%
+   \refstepcounter{subsection}%
+   \addcontentsline{toc}{subsection}{\protect\numberline{\thesubsection} #1}%
+   \vspace*{.5\baselineskip}
+   \pagebreak[3]%
+   {%
+     \fontseries{mc}\normalsize\bfseries\sffamily\thesubsection~#2
+     }%
+   \subsectionmark{#1}%
+   \@mywritetorep{#1}{subsection.\thesubsection}{section.\thesection}
+   \vspace*{.5\baselineskip}%
+   }
+
+   \newcommand{\@ssubsection}[1]%        % for subsection*{...}
+   {
+     \vspace*{.5\baselineskip}
+     \pagebreak[3]%
+     {%
+       \large\bfseries\sffamily#1
+     }%
+     \vspace*{.5\baselineskip}%
+   }
 
 % It redefines |\subsubsection|.
    \renewcommand{\subsubsection}{%
