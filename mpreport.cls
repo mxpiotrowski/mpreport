@@ -1,6 +1,6 @@
 %%
 %% mpreport, an attempt at a fancier report style
-%% @(#) $Id: mpreport.cls,v 1.7 2000/04/27 22:22:12 mxp Exp mxp $
+%% @(#) $Id: mpreport.cls,v 1.8 2001/10/13 10:30:29 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option and
 %%        loads the graphicx package.
@@ -39,8 +39,8 @@
        % title
 
        \begin{flushright}
-         \huge\sffamily\fontseries{mc}\slshape\bfseries
-         \@author\\\@title\\\normalsize\@date
+         \sffamily\fontseries{mc}\slshape\bfseries
+         \large\@author\\[1ex]\huge\@title\\[1ex]\normalsize\@date
          \vfill
        \end{flushright}
 
