@@ -1,48 +1,62 @@
-%%%
-%%% mpreport, an attempt at a fancier report style
-%%% @(#) $Id: mpreport.cls,v 1.4 1999-06-04 11:48:50+02 mxp Exp mxp $
+%%
+%% mpreport, an attempt at a fancier report style
+%% @(#) $Id: mpreport.cls,v 1.5 1999-06-04 15:54:58+02 mxp Exp mxp $
 
-%%% NOTE:  This class automatically specifies the a4paper option and
-%%%        loads the graphicx package.
+%% NOTE:  This class automatically specifies the a4paper option and
+%%        loads the graphicx package.
 
-%%% The class begins by announcing itself as |mpreport.cls|.
+%% The class begins by announcing itself as |mpreport.cls|.
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{mpreport}[1999/06/04 A variant report class]
 
-%%% The class has one option, ``hyperref,'' to enable special hacks
-%%% for hyperref.  Specify it if you want PDF bookmarks for sections and
-%%% subsections.
-\usepackage{ifthen}
-\newboolean{hyperref}
-\setboolean{hyperref}{false}
-\DeclareOption{hyperref}{\setboolean{hyperref}{true}}
-
-%%% It passes all other options on to the |report| class.
+%%% It passes all options on to the |report| class.
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
 \ProcessOptions
 
-%%% It then loads the class |report| and the graphicx package.
+%%% It then loads the class |report|.
 \LoadClass[a4paper]{report}
-\usepackage{graphicx}
+
+%% We also need the |ifthen| package.
+\RequirePackage{ifthen}
+
+%% For your convenience we also load |graphicx|--you typically need it 
+%% in reports.
+\RequirePackage{graphicx}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Because hyperref doesn't recognize the redefined section command,
+%% we have to write out the information necessary for PDF bookmarks
+%% ourselves.  This hack is only enabled if the |hyperref| package was
+%% loaded--and to detect this, this code must be executed after all
+%% packages are loaded:  At \begin{document}.
 
-%%% This is hacked code from the hyperref package
-\ifthenelse{\boolean{hyperref}}%
-{
-  \def\@mywritetorep#1#2#3{%
-    \ifx\WriteBookmarks\relax\else
-    \protected@write\@outlinefile%
-    {\let~\space
-      \def\LaTeX{LaTeX}%
-      \def\eTeX{e-TeX}%
-      \def\TeX{TeX}%
-      \let\label\@gobble
-      \let\index\@gobble
-      \let\glossary\@gobble}%
-    {\protect\BOOKMARK{#2}{#1}{#3}}%
-    \fi}}
-{\def\@mywritetorep#1#2#3{}}
+\AtBeginDocument{%
+  \newboolean{hyperref} \setboolean{hyperref}{false}
+  \@ifpackageloaded{hyperref}{%
+    \setboolean{hyperref}{true}}
+
+  \ifthenelse{\boolean{hyperref}}
+  {
+    \typeout{mparticle: enabling hyperref hacks.}
+    %% This is hacked code from the |hyperref| package
+    \def\@mywritetorep#1#2#3{%
+      \ifx\WriteBookmarks\relax\else
+      \protected@write\@outlinefile%
+      {\let~\space
+        \def\LaTeX{LaTeX}%
+        \def\eTeX{e-TeX}%
+        \def\TeX{TeX}%
+        \let\label\@gobble
+        \let\index\@gobble
+        \let\glossary\@gobble}%
+      {\protect\BOOKMARK{#2}{#1}{#3}}%
+      \fi}
+    %%
+  }
+  {
+    \def\@mywritetorep#1#2#3{\relax}
+  }
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -117,6 +131,7 @@
          \fontsize{6\EX}{6\EX}\sffamily\thechapter
          }%
        \hfill%
+       \fi
        % set variables for the formatting of the chapter title
        \settoheight{\mp@chapnoht}{%
          \fontsize{6\EX}{6\EX}\bfseries\sffamily\thechapter}%

@@ -1,46 +1,57 @@
-%%%
-%%% mparticle, an attempt at a fancier article style
-%%% @(#) $Id: mparticle.cls,v 1.3 1999-06-04 11:54:52+02 mxp Exp mxp $
+%%
+%% mparticle, an attempt at a fancier article style
+%% @(#) $Id: mparticle.cls,v 1.4 1999-06-04 15:55:27+02 mxp Exp mxp $
 
-%%% NOTE:  This class automatically specifies the a4paper option.
+%% NOTE:  This class automatically specifies the a4paper option.
 
-% The class begins by announcing itself as |mparticle.cls|.
-   \NeedsTeXFormat{LaTeX2e}
-   \ProvidesClass{mparticle}[1999/06/04 A variant article class]
+%% The class begins by announcing itself as |mparticle.cls|.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{mparticle}[1999/06/04 A variant article class]
 
-%%% The class has one option, ``hyperref,'' to enable special hacks
-%%% for hyperref.  Specify it if you want PDF bookmarks for sections and
-%%% subsections.
-\usepackage{ifthen}
-\newboolean{hyperref}
-\setboolean{hyperref}{false}
-\DeclareOption{hyperref}{\setboolean{hyperref}{true}}
-
-%%% It passes all other options on to the |article| class.
+%% It passes all options on to the |article| class.
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions
 
-%%% It then loads the class |article|.
+%% It then loads the class |article|.
 \LoadClass[a4paper]{article}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% We also need the |ifthen| package.
+\RequirePackage{ifthen}
 
-%%% This is hacked code from the hyperref package
-\ifthenelse{\boolean{hyperref}}%
-{
-  \def\@mywritetorep#1#2#3{%
-    \ifx\WriteBookmarks\relax\else
-    \protected@write\@outlinefile%
-    {\let~\space
-      \def\LaTeX{LaTeX}%
-      \def\eTeX{e-TeX}%
-      \def\TeX{TeX}%
-      \let\label\@gobble
-      \let\index\@gobble
-      \let\glossary\@gobble}%
-    {\protect\BOOKMARK{#2}{#1}{#3}}%
-    \fi}}
-{\def\@mywritetorep#1#2#3{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Because hyperref doesn't recognize the redefined section command,
+%% we have to write out the information necessary for PDF bookmarks
+%% ourselves.  This hack is only enabled if the |hyperref| package was
+%% loaded--and to detect this, this code must be executed after all
+%% packages are loaded:  At \begin{document}.
+
+\AtBeginDocument{%
+  \newboolean{hyperref} \setboolean{hyperref}{false}
+  \@ifpackageloaded{hyperref}{%
+    \setboolean{hyperref}{true}}
+
+  \ifthenelse{\boolean{hyperref}}
+  {
+    \typeout{mparticle: enabling hyperref hacks.}
+    %% This is hacked code from the |hyperref| package
+    \def\@mywritetorep#1#2#3{%
+      \ifx\WriteBookmarks\relax\else
+      \protected@write\@outlinefile%
+      {\let~\space
+        \def\LaTeX{LaTeX}%
+        \def\eTeX{e-TeX}%
+        \def\TeX{TeX}%
+        \let\label\@gobble
+        \let\index\@gobble
+        \let\glossary\@gobble}%
+      {\protect\BOOKMARK{#2}{#1}{#3}}%
+      \fi}
+    %%
+  }
+  {
+    \def\@mywritetorep#1#2#3{\relax}
+  }
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
