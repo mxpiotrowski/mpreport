@@ -1,6 +1,6 @@
 %%
 %% mparticle, an attempt at a fancier article style
-%% @(#) $Id: mparticle.cls,v 1.5 1999/06/04 16:07:21 mxp Exp mxp $
+%% @(#) $Id: mparticle.cls,v 1.6 1999/07/28 20:55:32 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option.
 
@@ -183,7 +183,7 @@
      \settoheight{\mp@capht}%
      {\parbox[b]{.9\mp@margwd}{\raggedleft\small\slshape\sffamily#1: #2}}%
      \hspace{-\mp@margwd}%
-     \vspace{-1.2\mp@capht}%
+     \vspace{-\mp@capht}%
      \parbox[t]{.9\mp@margwd}{\raggedleft\small\slshape\sffamily#1: #2}
      }
    
