@@ -1,6 +1,6 @@
 %
 % mparticle, an attempt at a fancier article style
-% @(#) $Id$
+% @(#) $Id: mparticle.cls,v 1.2 1999-06-04 11:05:08+02 mxp Exp mxp $
 
 % NOTE:  This class automatically specifies the a4paper option.
 
@@ -151,7 +151,7 @@
    \setlength\voffset{-1in}
    \setlength\textwidth{12cm}
    \setlength\textheight{.85\paperheight}
-   \setlength{\oddsidemargin}{65mm}
+   \setlength{\oddsidemargin}{75mm}
    \setlength{\evensidemargin}{65mm}
    \pagestyle{plain} 
 
