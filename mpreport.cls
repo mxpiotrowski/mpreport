@@ -1,6 +1,6 @@
 %%
 %% mpreport, an attempt at a fancier report style
-%% @(#) $Id: mpreport.cls,v 1.5 1999-06-04 15:54:58+02 mxp Exp mxp $
+%% @(#) $Id: mpreport.cls,v 1.6 1999/06/04 16:06:56 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option and
 %%        loads the graphicx package.
@@ -37,7 +37,7 @@
 
   \ifthenelse{\boolean{hyperref}}
   {
-    \typeout{mparticle: enabling hyperref hacks.}
+    \typeout{mpreport: enabling hyperref hacks.}
     %% This is hacked code from the |hyperref| package
     \def\@mywritetorep#1#2#3{%
       \ifx\WriteBookmarks\relax\else
@@ -185,7 +185,7 @@
           \@mywritetorep{#1}{section.\thesection}{chapter.\thechapter}
      }%
      \sectionmark{#1}%
-     \vspace*{\baselineskip}%
+     \vspace*{.5\baselineskip}%
    }
 
    \newcommand{\@ssection}[1]%        % for section*{...}
@@ -220,7 +220,7 @@
      }%
    \subsectionmark{#1}%
    \@mywritetorep{#1}{subsection.\thesubsection}{section.\thesection}
-   \vspace*{.5\baselineskip}%
+   \par%
    }
 
    \newcommand{\@ssubsection}[1]%        % for subsection*{...}
@@ -230,7 +230,7 @@
      {%
        \large\bfseries\sffamily#1
      }%
-     \vspace*{.5\baselineskip}%
+     \par%
    }
 
 % It redefines |\subsubsection|.
