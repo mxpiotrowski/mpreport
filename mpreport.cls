@@ -1,13 +1,13 @@
 %
 % mpreport, an attempt at a fancier report style
-%
+% @(#) $Id:$
 
 % NOTE:  This class automatically specifies the a4paper option and
 %        loads the graphicx package.
 
 % The class begins by announcing itself as |mpreport.cls|.
    \NeedsTeXFormat{LaTeX2e}
-   \ProvidesClass{mpreport}[1996/12/15 A variant report class]
+   \ProvidesClass{mpreport}[1999/06/04 A variant report class]
 
 % It passes all specified options on to the |report| class.
    \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
@@ -206,7 +206,7 @@
    \setlength\textwidth{120mm}
    \setlength\textheight{.85\paperheight}
    \setlength{\oddsidemargin}{75mm}
-   \setlength{\evensidemargin}{75mm}
+   \setlength{\evensidemargin}{65mm}
    \pagestyle{plain}
 
    \parindent0mm
