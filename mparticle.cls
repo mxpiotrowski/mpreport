@@ -1,6 +1,6 @@
 %%
 %% mparticle, an attempt at a fancier article style
-%% @(#) $Id: mparticle.cls,v 1.6 1999/07/28 20:55:32 mxp Exp mxp $
+%% @(#) $Id: mparticle.cls,v 1.7 2000/09/30 11:41:41 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option.
 
@@ -17,43 +17,6 @@
 
 %% We also need the |ifthen| package.
 \RequirePackage{ifthen}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Because hyperref doesn't recognize the redefined section command,
-%% we have to write out the information necessary for PDF bookmarks
-%% ourselves.  This hack is only enabled if the |hyperref| package was
-%% loaded--and to detect this, this code must be executed after all
-%% packages are loaded:  At \begin{document}.
-
-\AtBeginDocument{%
-  \newboolean{hyperref} \setboolean{hyperref}{false}
-  \@ifpackageloaded{hyperref}{%
-    \setboolean{hyperref}{true}}
-
-  \ifthenelse{\boolean{hyperref}}
-  {
-    \typeout{mparticle: enabling hyperref hacks.}
-    %% This is hacked code from the |hyperref| package
-    \def\@mywritetorep#1#2#3{%
-      \ifx\WriteBookmarks\relax\else
-      \protected@write\@outlinefile%
-      {\let~\space
-        \def\LaTeX{LaTeX}%
-        \def\eTeX{e-TeX}%
-        \def\TeX{TeX}%
-        \let\label\@gobble
-        \let\index\@gobble
-        \let\glossary\@gobble}%
-      {\protect\BOOKMARK{#2}{#1}{#3}}%
-      \fi}
-    %%
-  }
-  {
-    \def\@mywritetorep#1#2#3{\relax}
-  }
-}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%% The class then redefines |\maketitle|.
    \if@titlepage
@@ -104,7 +67,6 @@
        \par\vspace*{-.5\baselineskip}%
        \hspace{-\mp@margwd}%
        \large\bfseries\sffamily\thesection~#2\par
-       \@mywritetorep{#1}{section.\thesection}{}
      }%
      \sectionmark{#1}%
      % \vspace*{\baselineskip}%
@@ -136,28 +98,11 @@
 %     \par}%
 
 % It redefines |\subsection|.
-% Normally, all we had to do was to say:
-%   \renewcommand{\subsection}{%
-%     \@startsection
-%     {subsection}{2}{0pt}{-1.5ex plus -1ex minus -.2ex}%
-%     {1ex plus .2ex}{\fontseries{mc}\normalsize\bfseries\sffamily}%
-%     }
-% But with hyperref hacking we need the following:
- \renewcommand{\subsection}{\secdef\@subsection\@ssubsection%
-   }
- \newcommand{\@subsection}[2][?]%
- {%
-   \refstepcounter{subsection}%
-   \addcontentsline{toc}{subsection}{\protect\numberline{\thesubsection} #1}%
-   \vspace*{.5\baselineskip}
-   \pagebreak[3]%
-   {%
-     \fontseries{mc}\normalsize\bfseries\sffamily\thesubsection~#2
-     }%
-   \subsectionmark{#1}%
-   \@mywritetorep{#1}{subsection.\thesubsection}{section.\thesection}
-   \par
-   }
+   \renewcommand{\subsection}{%
+     \@startsection
+     {subsection}{2}{0pt}{-1.5ex plus -1ex minus -.2ex}%
+     {1ex plus .2ex}{\fontseries{mc}\normalsize\bfseries\sffamily}%
+     }
 
    \newcommand{\@ssubsection}[1]%        % for subsection*{...}
    {
