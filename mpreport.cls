@@ -1,6 +1,6 @@
 %%
 %% mpreport, an attempt at a fancier report style
-%% @(#) $Id: mpreport.cls,v 1.8 2001/10/13 10:30:29 mxp Exp mxp $
+%% @(#) $Id: mpreport.cls,v 1.9 2005/01/12 20:49:51 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option and
 %%        loads the graphicx package.
@@ -39,7 +39,7 @@
        % title
 
        \begin{flushright}
-         \sffamily\fontseries{mc}\slshape\bfseries
+         \sffamily\bfseries\slshape%
          \large\@author\\[1ex]\huge\@title\\[1ex]\normalsize\@date
          \vfill
        \end{flushright}
@@ -57,9 +57,9 @@
      \begin{flushleft}
        \null\hfill
        \vskip 2cm
-       \huge\sffamily\fontseries{mc}\slshape\bfseries
+       \sffamily\slshape\bfseries\huge
        \@title\\
-       \large\mdseries\upshape
+       \mdseries\upshape\large
        \vspace{.5em}%
        \@author, \@date\\
                                 % \rule{\textwidth}{.5mm}\\
@@ -101,10 +101,10 @@
        \settoheight{\mp@chapnoht}{%
          \fontsize{6\EX}{6\EX}\bfseries\sffamily\thechapter}%
        \settoheight{\mp@chaptlht}{\parbox[b]{.9\textwidth}{%
-           \raggedleft\Huge\sffamily\bfseries #1}}
+           \raggedleft\sffamily\bfseries\Huge #1}}
        % set the chapter title                                %
        \raisebox{-\mp@chaptlht}{\raisebox{\mp@chapnoht}{%
-           \parbox[b]{.9\textwidth}{\raggedleft\Huge\sffamily\bfseries #1}}}%
+           \parbox[b]{.9\textwidth}{\raggedleft\sffamily\bfseries\Huge #1}}}%
        \par\nobreak%
        \vskip\mp@margwd%
        }}
@@ -123,10 +123,10 @@
        \settoheight{\mp@chapnoht}{%
          \fontsize{6\EX}{6\EX}\bfseries\sffamily\thechapter}%
        \settoheight{\mp@chaptlht}{\parbox[b]{.9\textwidth}{%
-           \raggedleft\Huge\sffamily\bfseries #1}}
+           \raggedleft\sffamily\bfseries\Huge #1}}
        % set the chapter title                                %
        \raisebox{-\mp@chaptlht}{\raisebox{\mp@chapnoht}{%
-           \parbox[b]{.9\textwidth}{\raggedleft\Huge\sffamily\bfseries #1}}}%
+           \parbox[b]{.9\textwidth}{\raggedleft\sffamily\bfseries\Huge #1}}}%
        \par\nobreak%
        \vskip\mp@margwd%
        }%
@@ -146,35 +146,37 @@
           \hspace{-\mp@margwd}\rule{\mp@fullwd}{.25mm}%
           \par\vspace*{-.5\baselineskip}%
           \hspace{-\mp@margwd}%
-          \large\bfseries\sffamily\thesection~#2
+          \sffamily\bfseries\large\thesection~#2
      }%
      \sectionmark{#1}%
-     \vspace*{.5\baselineskip}%
+     \par
    }
 
    \newcommand{\@ssection}[1]%        % for section*{...}
-   {
+   {%
+     \vspace{\baselineskip}%
+     \pagebreak[3]%
      {%
        \hspace{-\mp@margwd}\rule{\mp@fullwd}{.25mm}%
        \par\vspace*{-.5\baselineskip}%
        \hspace{-\mp@margwd}%
-       \large\bfseries\sffamily#1
+       \sffamily\bfseries\large#1
      }%
-     \vspace*{-.1\baselineskip}%
+     \par
    }
 
 % It redefines |\subsection|.
    \renewcommand{\subsection}{%
      \@startsection
      {subsection}{2}{0pt}{-1.5ex plus -1ex minus -.2ex}%
-     {1ex plus .2ex}{\fontseries{mc}\normalsize\bfseries\sffamily}%
+     {1ex plus .2ex}{\sffamily\bfseries\normalsize}%
      }
 
 % It redefines |\subsubsection|.
    \renewcommand{\subsubsection}{%
      \@startsection
      {subsubsection}{3}{0pt}{-1.5ex plus -1ex minus -.2ex}%
-     {1ex plus .2ex}{\normalsize\bfseries\sffamily}%
+     {1ex plus .2ex}{\sffamily\bfseries\normalsize}%
      }
 
 % Put caption in the margin, next to the figure/table (place caption first in
@@ -182,10 +184,10 @@
    \newlength{\mp@capht}
    \newcommand{\mp@makefigcap}[2]{%
      \settoheight{\mp@capht}%
-     {\parbox[b]{.9\mp@margwd}{\raggedleft\small\slshape\sffamily#1: #2}}%
+     {\parbox[b]{.9\mp@margwd}{\raggedleft\sffamily\slshape\small#1: #2}}%
      \hspace{-\mp@margwd}%
      \vspace{-\mp@capht}%
-     \parbox[t]{.9\mp@margwd}{\raggedleft\small\slshape\sffamily#1: #2}
+     \parbox[t]{.9\mp@margwd}{\raggedleft\sffamily\slshape\small#1: #2}
      }
    
    \renewcommand{\figure}{%
