@@ -1,17 +1,19 @@
 %
-% mparticle, ein Versuch einer article-Variante, die nicht so öde aussieht
-%
+% mparticle, an attempt at a fancier article style
+% @(#) $Id$
+
+% NOTE:  This class automatically specifies the a4paper option.
 
 % The class begins by announcing itself as |mparticle.cls|.
    \NeedsTeXFormat{LaTeX2e}
-   \ProvidesClass{mparticle}[1996/12/15 A variant article class]
+   \ProvidesClass{mparticle}[1999/06/04 A variant article class]
 
 % It passes all specified options on to the |article| class.
    \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
    \ProcessOptions
 
 % It then loads the class |article|.
-   \LoadClass{article}
+   \LoadClass[a4paper]{article}
 
 % The class then redefines |\maketitle|.
    \if@titlepage
@@ -66,10 +68,10 @@
        \hspace{-\mp@margwd}\rule{\mp@fullwd}{.25mm}%
        \par\vspace*{-.5\baselineskip}%
        \hspace{-\mp@margwd}%
-       \large\bfseries\sffamily\thesection~#2
+       \large\bfseries\sffamily\thesection~#2\par
      }%
      \sectionmark{#1}%
-     \vspace*{\baselineskip}%
+     % \vspace*{\baselineskip}%
    }
 
    \newcommand{\@smpsection}[1]%        % for section*{...}
@@ -78,9 +80,9 @@
        \hspace{-\mp@margwd}\rule{\mp@fullwd}{.25mm}%
        \par\vspace*{-.5\baselineskip}%
        \hspace{-\mp@margwd}%
-       \large\bfseries\sffamily#1
+       \large\bfseries\sffamily#1\par
      }%
-     \vspace*{-.1\baselineskip}%
+     % \vspace*{\baselineskip}%
    }
 
 %   \newcommand{\@mpsection}[2][?]{%
@@ -134,7 +136,7 @@
      \renewcommand{\@oddhead}{}%
      \renewcommand{\@evenhead}{}%
      \renewcommand{\@oddfoot}{\hfil\textsf{\thepage}}%
-     \renewcommand{\@evenfoot}{\textsf{\thepage}\hfil}%
+     \renewcommand{\@evenfoot}{\hspace{-\mp@margwd}\textsf{\thepage}\hfil}%
      }
 
 % Footnote style
@@ -150,6 +152,7 @@
    \setlength\textwidth{12cm}
    \setlength\textheight{.85\paperheight}
    \setlength{\oddsidemargin}{65mm}
+   \setlength{\evensidemargin}{65mm}
    \pagestyle{plain} 
 
    \parindent0mm
