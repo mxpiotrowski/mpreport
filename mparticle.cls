@@ -1,6 +1,6 @@
 %%
 %% mparticle, an attempt at a fancier article style
-%% @(#) $Id: mparticle.cls,v 1.8 2002/01/07 12:02:12 mxp Exp mxp $
+%% @(#) $Id: mparticle.cls,v 1.9 2002/01/07 12:03:28 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option.
 
@@ -53,72 +53,50 @@
    \fi
 
 %%% It redefines |\section|.
-   \renewcommand{\section}{\secdef\@mpsection\@smpsection}
+   \renewcommand{\section}{\secdef\@section\@ssection}
 
    \newlength{\mp@headht}
-   \newcommand{\@mpsection}[2][?]%
+   \newcommand{\@section}[2][?]%
    {%
      \refstepcounter{section}%
      \addcontentsline{toc}{section}{\protect\numberline{\thesection} #1}%
      \vspace{\baselineskip}%
      \pagebreak[3]%
      {%
-       \hspace{-\mp@margwd}\rule{\mp@fullwd}{.25mm}%
-       \par\vspace*{-.5\baselineskip}%
-       \hspace{-\mp@margwd}%
-       \large\bfseries\sffamily\thesection~#2\par
+          \hspace{-\mp@margwd}\rule{\mp@fullwd}{.25mm}%
+          \par\vspace*{-.5\baselineskip}%
+          \hspace{-\mp@margwd}%
+          \sffamily\bfseries\large\thesection~#2
      }%
      \sectionmark{#1}%
-     % \vspace*{\baselineskip}%
+     \par
    }
 
-   \newcommand{\@smpsection}[1]%        % for section*{...}
-   {
+   \newcommand{\@ssection}[1]%        % for section*{...}
+   {%
+     \vspace{\baselineskip}%
+     \pagebreak[3]%
      {%
        \hspace{-\mp@margwd}\rule{\mp@fullwd}{.25mm}%
        \par\vspace*{-.5\baselineskip}%
        \hspace{-\mp@margwd}%
-       \large\bfseries\sffamily#1\par
+       \sffamily\bfseries\large#1
      }%
-     % \vspace*{\baselineskip}%
+     \par
    }
-
-%   \newcommand{\@mpsection}[2][?]{%
-%     \refstepcounter{section}%
-%     \addcontentsline{toc}{section}{\protect\numberline{\thesection} #1}%
-%     {\par\hspace{-\mp@margwd}\large\bfseries\sffamily\thesection~#2%
-%       \par\vspace{-\baselineskip}%
-%       \hspace{-\mp@margwd}\rule{\mp@fullwd}{.25mm}}%
-%     \sectionmark{#1}\par}%
-
-%   \newcommand{\@smpsection}[1]{%        % for section*{...}
-%     {\par\hspace{-\mp@margwd}\large\bfseries\sffamily#1%
-%       \par\vspace{-\baselineskip}%
-%       \hspace{-\mp@margwd}\rule{\mp@fullwd}{.25mm}}%
-%     \par}%
 
 % It redefines |\subsection|.
    \renewcommand{\subsection}{%
      \@startsection
      {subsection}{2}{0pt}{-1.5ex plus -1ex minus -.2ex}%
-     {1ex plus .2ex}{\fontseries{mc}\normalsize\bfseries\sffamily}%
+     {1ex plus .2ex}{\sffamily\bfseries\normalsize}%
      }
-
-   \newcommand{\@ssubsection}[1]%        % for subsection*{...}
-   {
-     \vspace*{.5\baselineskip}
-     \pagebreak[3]%
-     {%
-       \large\bfseries\sffamily#1
-     }%
-     \par
-   }
 
 % It redefines |\subsubsection|.
    \renewcommand{\subsubsection}{%
      \@startsection
      {subsubsection}{3}{0pt}{-1.5ex plus -1ex minus -.2ex}%
-     {1ex plus .2ex}{\normalsize\bfseries\sffamily}%
+     {1ex plus .2ex}{\sffamily\bfseries\normalsize}%
      }
 
 % Put caption in the margin, next to the figure/table (place caption first in
