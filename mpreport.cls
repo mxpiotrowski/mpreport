@@ -7,13 +7,13 @@
 
 % The class begins by announcing itself as |mpreport.cls|.
    \NeedsTeXFormat{LaTeX2e}
-   \ProvidesClass{mpreport}[1996/12/15 A variant article class]
+   \ProvidesClass{mpreport}[1996/12/15 A variant report class]
 
-% It passes all specified options on to the |article| class.
+% It passes all specified options on to the |report| class.
    \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
    \ProcessOptions
 
-% It then loads the class |article|.
+% It then loads the class |report|.
    \LoadClass[a4paper]{report}
    \usepackage{graphicx}
 
@@ -54,7 +54,7 @@
        \large\mdseries\upshape
        \vspace{.5em}%
        \@author, \@date\\
-                                %\rule{\textwidth}{.5mm}\\
+                                % \rule{\textwidth}{.5mm}\\
      \end{flushleft}
      \@thanks
      \par
@@ -133,10 +133,10 @@
      \vspace{\baselineskip}%
      \pagebreak[3]%
      {%
-       \hspace{-\mp@margwd}\rule{\mp@fullwd}{.25mm}%
-       \par\vspace*{-.5\baselineskip}%
-       \hspace{-\mp@margwd}%
-       \large\bfseries\sffamily\thesection~#2
+          \hspace{-\mp@margwd}\rule{\mp@fullwd}{.25mm}%
+          \par\vspace*{-.5\baselineskip}%
+          \hspace{-\mp@margwd}%
+          \large\bfseries\sffamily\thesection~#2
      }%
      \sectionmark{#1}%
      \vspace*{\baselineskip}%
@@ -190,7 +190,7 @@
      \renewcommand{\@oddhead}{}%
      \renewcommand{\@evenhead}{}%
      \renewcommand{\@oddfoot}{\hfil\textsf{\thepage}}%
-     \renewcommand{\@evenfoot}{\textsf{\thepage}\hfil}%
+     \renewcommand{\@evenfoot}{\hspace{-\mp@margwd}\textsf{\thepage}\hfil}%
      }
 
 % Footnote style
@@ -206,6 +206,7 @@
    \setlength\textwidth{120mm}
    \setlength\textheight{.85\paperheight}
    \setlength{\oddsidemargin}{75mm}
+   \setlength{\evensidemargin}{75mm}
    \pagestyle{plain}
 
    \parindent0mm
