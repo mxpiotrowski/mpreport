@@ -1,6 +1,6 @@
 %
 % mpreport, an attempt at a fancier report style
-% @(#) $Id:$
+% @(#) $Id: mpreport.cls,v 1.3 1999-06-04 10:52:46+02 mxp Exp mxp $
 
 % NOTE:  This class automatically specifies the a4paper option and
 %        loads the graphicx package.
@@ -67,6 +67,7 @@
    \renewcommand{\thechapter}{\arabic{chapter}}
    
    \renewcommand{\chapter}{%
+     \if@openright\cleardoublepage\else\clearpage\fi
      \secdef\@chapter\@schapter%
      }
 
