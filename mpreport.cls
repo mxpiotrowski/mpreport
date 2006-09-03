@@ -1,6 +1,6 @@
 %%
 %% mpreport, an attempt at a fancier report style
-%% @(#) $Id: mpreport.cls,v 1.9 2005/01/12 20:49:51 mxp Exp mxp $
+%% @(#) $Id: mpreport.cls,v 1.10 2005/02/03 01:17:38 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option and
 %%        loads the graphicx package.
@@ -9,11 +9,11 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{mpreport}[1999/06/04 A variant report class]
 
-%%% It passes all options on to the |report| class.
+%% It passes all options on to the |report| class.
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
 \ProcessOptions
 
-%%% It then loads the class |report|.
+%% It then loads the class |report|.
 \LoadClass[a4paper]{report}
 
 %% We also need the |ifthen| package.
@@ -25,7 +25,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%% The class then redefines |\maketitle|.
+%% The class then redefines |\maketitle|.
    \if@titlepage
    \renewcommand{\maketitle}{%
      \begin{titlepage}%
@@ -70,7 +70,7 @@
      }
    \fi
 
-% It redefines |\chapter|.
+%% It redefines |\chapter|.
 
    \renewcommand{\thechapter}{\arabic{chapter}}
    
@@ -82,7 +82,6 @@
    \renewcommand{\@chapter}[2][?]{%
      \clearpage%
      \refstepcounter{chapter}%
-     \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter} #1}%
      {%
        \parindent \z@ \raggedright \normalfont%
        \ifnum \c@secnumdepth >\m@ne%
@@ -105,6 +104,7 @@
        % set the chapter title                                %
        \raisebox{-\mp@chaptlht}{\raisebox{\mp@chapnoht}{%
            \parbox[b]{.9\textwidth}{\raggedleft\sffamily\bfseries\Huge #1}}}%
+       \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter} #1}%
        \par\nobreak%
        \vskip\mp@margwd%
        }}
@@ -132,14 +132,13 @@
        }%
      }
      
-%%% It redefines |\section|.
+%% It redefines |\section|.
    \renewcommand{\section}{\secdef\@section\@ssection}
 
    \newlength{\mp@headht}
    \newcommand{\@section}[2][?]%
    {%
      \refstepcounter{section}%
-     \addcontentsline{toc}{section}{\protect\numberline{\thesection} #1}%
      \vspace{\baselineskip}%
      \pagebreak[3]%
      {%
@@ -149,6 +148,7 @@
           \sffamily\bfseries\large\thesection~#2
      }%
      \sectionmark{#1}%
+     \addcontentsline{toc}{section}{\protect\numberline{\thesection} #1}%
      \par
    }
 
@@ -165,22 +165,22 @@
      \par
    }
 
-% It redefines |\subsection|.
+%% It redefines |\subsection|.
    \renewcommand{\subsection}{%
      \@startsection
      {subsection}{2}{0pt}{-1.5ex plus -1ex minus -.2ex}%
      {1ex plus .2ex}{\sffamily\bfseries\normalsize}%
      }
 
-% It redefines |\subsubsection|.
+%% It redefines |\subsubsection|.
    \renewcommand{\subsubsection}{%
      \@startsection
      {subsubsection}{3}{0pt}{-1.5ex plus -1ex minus -.2ex}%
      {1ex plus .2ex}{\sffamily\bfseries\normalsize}%
      }
 
-% Put caption in the margin, next to the figure/table (place caption first in
-% figure/table environment)
+%% Put caption in the margin, next to the figure/table (place caption first in
+%% figure/table environment)
    \newlength{\mp@capht}
    \newcommand{\mp@makefigcap}[2]{%
      \settoheight{\mp@capht}%
@@ -197,7 +197,7 @@
      \let\@makecaption\mp@makefigcap\@float{table}%
      }
 
-% Page style
+%% Page style
    \renewcommand{\ps@plain}{%
      \renewcommand{\@oddhead}{}%
      \renewcommand{\@evenhead}{}%
@@ -205,14 +205,14 @@
      \renewcommand{\@evenfoot}{\hspace{-\mp@margwd}\textsf{\thepage}\hfil}%
      }
 
-% Footnote style
+%% Footnote style
    \renewcommand{\@makefntext}[1]%
    {%
      \setlength{\parindent}{0mm}%
      \makebox[1em][l]{\@makefnmark}#1%
    }
 
-% Dimensions
+%% Dimensions
    \setlength\hoffset{-1in}
    \setlength\voffset{-1in}
    \setlength\textwidth{120mm}
