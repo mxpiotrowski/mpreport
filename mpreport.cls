@@ -1,6 +1,6 @@
 %%
 %% mpreport, an attempt at a fancier report style
-%% @(#) $Id: mpreport.cls,v 1.11 2006/09/03 09:05:22 mxp Exp mxp $
+%% @(#) $Id: mpreport.cls,v 1.12 2006/09/03 11:23:50 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option and
 %%        loads the graphicx package.
@@ -144,7 +144,7 @@
      \vspace{\baselineskip}%
      \pagebreak[3]%
      {%
-       \parskip1.5ex
+       \parskip1.5ex%
        \hspace{-\mp@margwd}\rule{\mp@fullwd}{.25mm}%
        \par\vspace*{-.5\baselineskip}%
        \hspace{-\mp@margwd}%
@@ -160,7 +160,7 @@
      \vspace{\baselineskip}%
      \pagebreak[3]%
      {%
-       \parskip1.5ex
+       \parskip1.5ex%
        \hspace{-\mp@margwd}\rule{\mp@fullwd}{.25mm}%
        \par\vspace*{-.5\baselineskip}%
        \hspace{-\mp@margwd}%
