@@ -1,6 +1,6 @@
 %%
 %% mpreport, an attempt at a fancier report style
-%% @(#) $Id: mpreport.cls,v 1.10 2005/02/03 01:17:38 mxp Exp mxp $
+%% @(#) $Id: mpreport.cls,v 1.11 2006/09/03 09:05:22 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option and
 %%        loads the graphicx package.
@@ -83,6 +83,7 @@
      \clearpage%
      \refstepcounter{chapter}%
      {%
+       \parskip1ex%
        \parindent \z@ \raggedright \normalfont%
        \ifnum \c@secnumdepth >\m@ne%
        \par%
@@ -112,6 +113,7 @@
    \renewcommand{\@schapter}[1]{%        % for chapter*{...}
      {%
        \newpage%
+       \parskip1ex%
        \par%
        \hspace{-\mp@margwd}\rule{\mp@fullwd}{.25mm}%
        \vspace{-\baselineskip}\vspace{.25mm}%
@@ -142,10 +144,11 @@
      \vspace{\baselineskip}%
      \pagebreak[3]%
      {%
-          \hspace{-\mp@margwd}\rule{\mp@fullwd}{.25mm}%
-          \par\vspace*{-.5\baselineskip}%
-          \hspace{-\mp@margwd}%
-          \sffamily\bfseries\large\thesection~#2
+       \parskip1.5ex
+       \hspace{-\mp@margwd}\rule{\mp@fullwd}{.25mm}%
+       \par\vspace*{-.5\baselineskip}%
+       \hspace{-\mp@margwd}%
+       \sffamily\bfseries\large\thesection~#2
      }%
      \sectionmark{#1}%
      \addcontentsline{toc}{section}{\protect\numberline{\thesection} #1}%
@@ -157,6 +160,7 @@
      \vspace{\baselineskip}%
      \pagebreak[3]%
      {%
+       \parskip1.5ex
        \hspace{-\mp@margwd}\rule{\mp@fullwd}{.25mm}%
        \par\vspace*{-.5\baselineskip}%
        \hspace{-\mp@margwd}%
