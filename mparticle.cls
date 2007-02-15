@@ -1,6 +1,6 @@
 %%
 %% mparticle, an attempt at a fancier article style
-%% @(#) $Id: mparticle.cls,v 1.10 2005/02/20 16:46:12 mxp Exp mxp $
+%% @(#) $Id: mparticle.cls,v 1.11 2006/09/03 12:28:21 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option.
 
@@ -23,7 +23,7 @@
    \renewcommand{\maketitle}{%
      \begin{titlepage}%
        \begin{flushleft}
-         \huge\sffamily\fontseries{mc}\slshape\bfseries
+         \huge\sffamily\bfseries
          \@title\\
          \large\mdseries\upshape
          \vspace{.5em}%
@@ -39,7 +39,7 @@
      \begin{flushleft}
        \null\hfill
        \vskip 2cm
-       \huge\sffamily\fontseries{mc}\slshape\bfseries
+       \huge\sffamily\bfseries
        \@title\\
        \large\mdseries\upshape
        \vspace{.5em}%
@@ -133,7 +133,41 @@
      \setlength{\parindent}{0mm}%
      \makebox[1em][l]{\@makefnmark}#1%
    }
- 
+
+%% Marginal notes
+%% We redefine the \marginpar command so that marginpars always appear
+%% in the left margin.  Cf.
+%% <http://www.tug.org/tex-archive/support/dbtex/refman.sty>
+%% <http://tug.ctan.org/tex-archive/macros/latex/contrib/refman/layout_e.pdf>
+   \def\@addmarginpar{\@next\@marbox\@currlist{\@cons\@freelist\@marbox
+       \@cons\@freelist\@currbox}\@latexbug\@tempcnta\@ne
+       \@tempcnta\m@ne % always in the left margin
+       \ifnum\@tempcnta <\z@ \global\setbox\@marbox\box\@currbox \fi
+       \@tempdima\@mparbottom \advance\@tempdima -\@pageht
+          \advance\@tempdima\ht\@marbox \ifdim\@tempdima >\z@
+          \@warning{Marginpar on page \thepage\space moved}\else\@tempdima\z@
+          \fi
+       \global\@mparbottom\@pageht \global\advance\@mparbottom\@tempdima
+          \global\advance\@mparbottom\dp\@marbox
+          \global\advance\@mparbottom\marginparpush
+       \advance\@tempdima -\ht\@marbox
+       \global\ht\@marbox\z@ \global\dp\@marbox\z@
+       \vskip -\@pagedp \vskip\@tempdima\nointerlineskip
+       \hbox to\columnwidth
+         {\ifnum \@tempcnta >\z@
+             \hskip\columnwidth \hskip\marginparsep
+           \else \hskip -\marginparsep \hskip -\marginparwidth \fi
+          \box\@marbox \hss}
+       \vskip -\@tempdima
+       \nointerlineskip
+       \hbox{\vrule \@height\z@ \@width\z@ \@depth\@pagedp}}
+
+%% Set the style of the marginpars to match that of captions
+   \let\oldmarginpar\marginpar
+   \renewcommand\marginpar[2][none]{%
+     \-\oldmarginpar{\raggedleft\sffamily\slshape\small#2}%
+   }
+
 %% Dimensions
    \setlength\hoffset{-1in}
    \setlength\voffset{-1in}
@@ -148,9 +182,10 @@
 
    \newlength{\mp@margwd}
    \setlength{\mp@margwd}{55mm}
+   \setlength{\marginparwidth}{0.85\mp@margwd}
 
    \newlength{\mp@fullwd}
    \setlength{\mp@fullwd}{\textwidth}
    \addtolength{\mp@fullwd}{\mp@margwd}
-   
+
 \endinput

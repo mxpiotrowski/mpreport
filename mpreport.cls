@@ -1,6 +1,6 @@
 %%
 %% mpreport, an attempt at a fancier report style
-%% @(#) $Id: mpreport.cls,v 1.12 2006/09/03 11:23:50 mxp Exp mxp $
+%% @(#) $Id: mpreport.cls,v 1.13 2006/09/03 12:27:48 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option and
 %%        loads the graphicx package.
@@ -39,7 +39,7 @@
        % title
 
        \begin{flushright}
-         \sffamily\bfseries\slshape%
+         \sffamily\bfseries\upshape%
          \large\@author\\[1ex]\huge\@title\\[1ex]\normalsize\@date
          \vfill
        \end{flushright}
@@ -57,7 +57,7 @@
      \begin{flushleft}
        \null\hfill
        \vskip 2cm
-       \sffamily\slshape\bfseries\huge
+       \sffamily\bfseries\upshape\huge
        \@title\\
        \mdseries\upshape\large
        \vspace{.5em}%
@@ -93,13 +93,13 @@
        \par\hspace{-\mp@margwd}%
        % typeset the chapter number
        \makebox[\mp@margwd][r]{%
-         \fontsize{6\EX}{6\EX}\sffamily\thechapter
+         \fontsize{6\EX}{6\EX}\sffamily\bfseries\thechapter
          }%
        \hfill%
        \fi
        % set variables for the formatting of the chapter title
        \settoheight{\mp@chapnoht}{%
-         \fontsize{6\EX}{6\EX}\bfseries\sffamily\thechapter}%
+         \fontsize{6\EX}{6\EX}\sffamily\bfseries\thechapter}%
        \settoheight{\mp@chaptlht}{\parbox[b]{.9\textwidth}{%
            \raggedleft\sffamily\bfseries\Huge #1}}
        % set the chapter title                                %
@@ -123,7 +123,7 @@
        \hfill%
        % set variables for the formatting of the chapter title
        \settoheight{\mp@chapnoht}{%
-         \fontsize{6\EX}{6\EX}\bfseries\sffamily\thechapter}%
+         \fontsize{6\EX}{6\EX}\sffamily\bfseries\thechapter}%
        \settoheight{\mp@chaptlht}{\parbox[b]{.9\textwidth}{%
            \raggedleft\sffamily\bfseries\Huge #1}}
        % set the chapter title                                %
@@ -216,6 +216,40 @@
      \makebox[1em][l]{\@makefnmark}#1%
    }
 
+%% Marginal notes
+%% We redefine the \marginpar command so that marginpars always appear
+%% in the left margin.  Cf.
+%% <http://www.tug.org/tex-archive/support/dbtex/refman.sty>
+%% <http://tug.ctan.org/tex-archive/macros/latex/contrib/refman/layout_e.pdf>
+   \def\@addmarginpar{\@next\@marbox\@currlist{\@cons\@freelist\@marbox
+       \@cons\@freelist\@currbox}\@latexbug\@tempcnta\@ne
+       \@tempcnta\m@ne % always in the left margin
+       \ifnum\@tempcnta <\z@ \global\setbox\@marbox\box\@currbox \fi
+       \@tempdima\@mparbottom \advance\@tempdima -\@pageht
+          \advance\@tempdima\ht\@marbox \ifdim\@tempdima >\z@
+          \@warning{Marginpar on page \thepage\space moved}\else\@tempdima\z@
+          \fi
+       \global\@mparbottom\@pageht \global\advance\@mparbottom\@tempdima
+          \global\advance\@mparbottom\dp\@marbox
+          \global\advance\@mparbottom\marginparpush
+       \advance\@tempdima -\ht\@marbox
+       \global\ht\@marbox\z@ \global\dp\@marbox\z@
+       \vskip -\@pagedp \vskip\@tempdima\nointerlineskip
+       \hbox to\columnwidth
+         {\ifnum \@tempcnta >\z@
+             \hskip\columnwidth \hskip\marginparsep
+           \else \hskip -\marginparsep \hskip -\marginparwidth \fi
+          \box\@marbox \hss}
+       \vskip -\@tempdima
+       \nointerlineskip
+       \hbox{\vrule \@height\z@ \@width\z@ \@depth\@pagedp}}
+
+%% Set the style of the marginpars to match that of captions
+   \let\oldmarginpar\marginpar
+   \renewcommand\marginpar[2][none]{%
+     \-\oldmarginpar{\raggedleft\sffamily\slshape\small#2}%
+   }
+
 %% Dimensions
    \setlength\hoffset{-1in}
    \setlength\voffset{-1in}
@@ -230,6 +264,7 @@
 
    \newlength{\mp@margwd}
    \setlength{\mp@margwd}{50mm}
+   \setlength{\marginparwidth}{0.85\mp@margwd}
 
    \newlength{\mp@fullwd}
    \setlength{\mp@fullwd}{\textwidth}
