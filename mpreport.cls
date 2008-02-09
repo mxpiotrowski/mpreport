@@ -1,6 +1,6 @@
 %%
 %% mpreport, an attempt at a fancier report style
-%% @(#) $Id: mpreport.cls,v 1.13 2006/09/03 12:27:48 mxp Exp mxp $
+%% @(#) $Id: mpreport.cls,v 1.14 2007/02/15 16:28:58 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option and
 %%        loads the graphicx package.
@@ -202,6 +202,11 @@
      }
 
 %% Page style
+  \renewcommand*{\chaptermark}[1]{%
+   \markboth {\ifnum \c@secnumdepth >\m@ne
+        \chaptermarkformat\fi
+        ##1}{}}%
+
    \renewcommand{\ps@plain}{%
      \renewcommand{\@oddhead}{}%
      \renewcommand{\@evenhead}{}%
@@ -210,6 +215,13 @@
      }
 
 %% Footnote style
+%%
+%% "Daß man auch den Noten selbst diese kleine hochstehende Ziffer
+%% voranstellt, ist eine sinnlose Neuerung der Verfallszeit, die jetzt
+%% zum Glück wieder verschwindet. Hier hat nur die Vollziffer mit dem
+%% Punkt dahinter zu stehen." (Paul Renner, Die Kunst der Typographie,
+%% p. 70)
+   \renewcommand{\@makefnmark}{\mbox{\normalfont\@thefnmark.\quad}}
    \renewcommand{\@makefntext}[1]%
    {%
      \setlength{\parindent}{0mm}%
