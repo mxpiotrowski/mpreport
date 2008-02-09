@@ -1,6 +1,6 @@
 %%
 %% mpreport, an attempt at a fancier report style
-%% @(#) $Id: mpreport.cls,v 1.14 2007/02/15 16:28:58 mxp Exp mxp $
+%% @(#) $Id: mpreport.cls,v 1.15 2008/02/09 13:12:34 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option and
 %%        loads the graphicx package.
@@ -104,7 +104,9 @@
            \raggedleft\sffamily\bfseries\Huge #1}}
        % set the chapter title                                %
        \raisebox{-\mp@chaptlht}{\raisebox{\mp@chapnoht}{%
-           \parbox[b]{.9\textwidth}{\raggedleft\sffamily\bfseries\Huge #1}}}%
+           \parbox[b]{.9\textwidth}{\raggedleft\sffamily\bfseries\Huge
+             #1}}}%
+       \chaptermark{#1}%
        \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter} #1}%
        \par\nobreak%
        \vskip\mp@margwd%
@@ -202,17 +204,58 @@
      }
 
 %% Page style
-  \renewcommand*{\chaptermark}[1]{%
-   \markboth {\ifnum \c@secnumdepth >\m@ne
-        \chaptermarkformat\fi
-        ##1}{}}%
-
+%% For \pagestyle{plain}
    \renewcommand{\ps@plain}{%
      \renewcommand{\@oddhead}{}%
      \renewcommand{\@evenhead}{}%
      \renewcommand{\@oddfoot}{\hfil\textsf{\thepage}}%
      \renewcommand{\@evenfoot}{\hspace{-\mp@margwd}\textsf{\thepage}\hfil}%
      }
+%% For \pagestyle{headings}
+   \if@twoside
+     \renewcommand{\ps@headings}{%
+       \renewcommand{\@oddhead}{{\sffamily\rightmark}\hfil}%
+       \renewcommand{\@evenhead}{\hfil\sffamily\leftmark}%
+       \renewcommand{\@oddfoot}{\hfil\textsf{\thepage}}%
+       \renewcommand{\@evenfoot}{\hspace{-\mp@margwd}\textsf{\thepage}\hfil}%
+       \let\@mkboth\markboth
+       \def\chaptermark##1{%
+         \markboth {%
+           \ifnum \c@secnumdepth >\m@ne
+           \thechapter \quad %
+           \fi
+           ##1}{}}%
+       \def\sectionmark##1{%
+         \markright {%
+           \ifnum \c@secnumdepth >\z@
+           \thesection \quad %
+           \fi
+           ##1}}%
+     }
+   \else
+     \renewcommand{\ps@headings}{%
+       \renewcommand{\@oddhead}{{\hfil{\sffamily\rightmark}}}
+       \renewcommand{\@oddfoot}{\hfil\textsf{\thepage}}
+       \let\@mkboth\markboth
+       \def\chaptermark##1{%
+         \markright {%
+           \ifnum \c@secnumdepth >\m@ne
+           \thechapter \quad %
+           \fi
+           ##1}}%
+     }
+   \fi
+%% For \pagestyle{myheadings}
+\renewcommand{\ps@myheadings}{
+  \renewcommand{\@oddhead}{{\sffamily\rightmark}\hfil}
+  \renewcommand{\@evenhead}{\hfil\sffamily\leftmark}
+  \renewcommand{\@oddfoot}{\hfil\textsf{\thepage}}%
+  \renewcommand{\@evenfoot}{\hspace{-\mp@margwd}\textsf{\thepage}\hfil}%
+
+  \let\@mkboth\@gobbletwo
+  \let\chaptermark\@gobble
+  \let\sectionmark\@gobble
+}
 
 %% Footnote style
 %%
@@ -221,11 +264,10 @@
 %% zum Glück wieder verschwindet. Hier hat nur die Vollziffer mit dem
 %% Punkt dahinter zu stehen." (Paul Renner, Die Kunst der Typographie,
 %% p. 70)
-   \renewcommand{\@makefnmark}{\mbox{\normalfont\@thefnmark.\quad}}
    \renewcommand{\@makefntext}[1]%
    {%
      \setlength{\parindent}{0mm}%
-     \makebox[1em][l]{\@makefnmark}#1%
+     \makebox[1.5em][l]{\normalfont\@thefnmark.\quad}#1%
    }
 
 %% Marginal notes
