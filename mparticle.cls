@@ -1,6 +1,6 @@
 %%
 %% mparticle, an attempt at a fancier article style
-%% @(#) $Id: mparticle.cls,v 1.11 2006/09/03 12:28:21 mxp Exp mxp $
+%% @(#) $Id: mparticle.cls,v 1.12 2007/02/15 16:29:08 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option.
 
@@ -128,10 +128,16 @@
      }
 
 %% Footnote style
+%%
+%% "Daß man auch den Noten selbst diese kleine hochstehende Ziffer
+%% voranstellt, ist eine sinnlose Neuerung der Verfallszeit, die jetzt
+%% zum Glück wieder verschwindet. Hier hat nur die Vollziffer mit dem
+%% Punkt dahinter zu stehen." (Paul Renner, Die Kunst der Typographie,
+%% p. 70)
    \renewcommand{\@makefntext}[1]%
    {%
      \setlength{\parindent}{0mm}%
-     \makebox[1em][l]{\@makefnmark}#1%
+     \makebox[1.5em][l]{\normalfont\@thefnmark.\quad}#1%
    }
 
 %% Marginal notes
