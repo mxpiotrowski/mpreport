@@ -1,6 +1,6 @@
 %%
 %% mpreport, an attempt at a fancier report style
-%% @(#) $Id: mpreport.cls,v 1.15 2008/02/09 13:12:34 mxp Exp mxp $
+%% @(#) $Id: mpreport.cls,v 1.16 2008/02/09 17:02:07 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option and
 %%        loads the graphicx package.
@@ -88,8 +88,8 @@
        \ifnum \c@secnumdepth >\m@ne%
        \par%
        \hspace{-\mp@margwd}\rule{\mp@fullwd}{.25mm}%
-       \vspace{-\baselineskip}\vspace{.25mm}%
-       \par\hspace{-\mp@margwd}\rule{\mp@margwd}{2mm}%
+       \vspace{-\baselineskip}\\[2mm]%
+       \hspace{-\mp@margwd}\rule{\mp@margwd}{2mm}%
        \par\hspace{-\mp@margwd}%
        % typeset the chapter number
        \makebox[\mp@margwd][r]{%
@@ -118,8 +118,8 @@
        \parskip1ex%
        \par%
        \hspace{-\mp@margwd}\rule{\mp@fullwd}{.25mm}%
-       \vspace{-\baselineskip}\vspace{.25mm}%
-       \par\hspace{-\mp@margwd}\rule{\mp@margwd}{2mm}%
+       \vspace{-\baselineskip}\par%
+       \hspace{-\mp@margwd}\rule{\mp@margwd}{2mm}%
        \par\hspace{-\mp@margwd}%
        % don't typeset the chapter number
        \hfill%
