@@ -1,6 +1,6 @@
 %%
 %% mparticle, an attempt at a fancier article style
-%% @(#) $Id: mparticle.cls,v 1.12 2007/02/15 16:29:08 mxp Exp mxp $
+%% @(#) $Id: mparticle.cls,v 1.13 2008/02/09 17:10:10 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option.
 
@@ -28,7 +28,7 @@
          \large\mdseries\upshape
          \vspace{.5em}%
          \rule{\textwidth}{.5mm}\\        
-         \@author, \@date\\
+         \@author\\\@date\\
        \end{flushleft}
        \@thanks
        \par
@@ -43,7 +43,7 @@
        \@title\\
        \large\mdseries\upshape
        \vspace{.5em}%
-       \@author, \@date\\
+       \@author\\\@date\\
                                 %\rule{\textwidth}{.5mm}\\
      \end{flushleft}
      \@thanks
@@ -137,7 +137,7 @@
    \renewcommand{\@makefntext}[1]%
    {%
      \setlength{\parindent}{0mm}%
-     \makebox[1.5em][l]{\normalfont\@thefnmark.\quad}#1%
+     \makebox[1.5em][l]{\normalfont\@thefnmark.}\enspace#1%
    }
 
 %% Marginal notes

@@ -1,6 +1,6 @@
 %%
 %% mpreport, an attempt at a fancier report style
-%% @(#) $Id: mpreport.cls,v 1.16 2008/02/09 17:02:07 mxp Exp mxp $
+%% @(#) $Id: mpreport.cls,v 1.17 2008/03/05 17:27:29 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option and
 %%        loads the graphicx package.
@@ -267,7 +267,7 @@
    \renewcommand{\@makefntext}[1]%
    {%
      \setlength{\parindent}{0mm}%
-     \makebox[1.5em][l]{\normalfont\@thefnmark.\quad}#1%
+     \makebox[1.5em][l]{\normalfont\@thefnmark.}\enspace#1%
    }
 
 %% Marginal notes
