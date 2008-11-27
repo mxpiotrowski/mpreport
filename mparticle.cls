@@ -1,6 +1,6 @@
 %%
 %% mparticle, an attempt at a fancier article style
-%% @(#) $Id: mparticle.cls,v 1.13 2008/02/09 17:10:10 mxp Exp mxp $
+%% @(#) $Id: mparticle.cls,v 1.14 2008/07/08 14:43:42 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option.
 
@@ -70,7 +70,7 @@
      }%
      \sectionmark{#1}%
      \addcontentsline{toc}{section}{\protect\numberline{\thesection} #1}%
-     \par
+     \nopagebreak[4]
    }
 
    \newcommand{\@ssection}[1]%        % for section*{...}
@@ -125,7 +125,7 @@
      \renewcommand{\@evenhead}{}%
      \renewcommand{\@oddfoot}{\hfil\textsf{\thepage}}%
      \renewcommand{\@evenfoot}{\hspace{-\mp@margwd}\textsf{\thepage}\hfil}%
-     }
+   }
 
 %% Footnote style
 %%
@@ -134,10 +134,11 @@
 %% zum Glück wieder verschwindet. Hier hat nur die Vollziffer mit dem
 %% Punkt dahinter zu stehen." (Paul Renner, Die Kunst der Typographie,
 %% p. 70)
+   \newcommand{\mp@fnsep}{.} % Footnote separator, default is a period
    \renewcommand{\@makefntext}[1]%
    {%
      \setlength{\parindent}{0mm}%
-     \makebox[1.5em][l]{\normalfont\@thefnmark.}\enspace#1%
+     \makebox[1.5em][l]{\normalfont\@thefnmark\mp@fnsep}\enspace#1%
    }
 
 %% Marginal notes
