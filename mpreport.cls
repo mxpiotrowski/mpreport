@@ -1,6 +1,6 @@
 %%
 %% mpreport, an attempt at a fancier report style
-%% @(#) $Id: mpreport.cls,v 1.17 2008/03/05 17:27:29 mxp Exp mxp $
+%% @(#) $Id: mpreport.cls,v 1.18 2008/07/08 14:42:05 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option and
 %%        loads the graphicx package.
@@ -101,11 +101,11 @@
        \settoheight{\mp@chapnoht}{%
          \fontsize{6\EX}{6\EX}\sffamily\bfseries\thechapter}%
        \settoheight{\mp@chaptlht}{\parbox[b]{.9\textwidth}{%
-           \raggedleft\sffamily\bfseries\Huge #1}}
+           \raggedleft\sffamily\bfseries\Huge #2}}
        % set the chapter title                                %
        \raisebox{-\mp@chaptlht}{\raisebox{\mp@chapnoht}{%
            \parbox[b]{.9\textwidth}{\raggedleft\sffamily\bfseries\Huge
-             #1}}}%
+             #2}}}%
        \chaptermark{#1}%
        \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter} #1}%
        \par\nobreak%
@@ -154,7 +154,7 @@
      }%
      \sectionmark{#1}%
      \addcontentsline{toc}{section}{\protect\numberline{\thesection} #1}%
-     \par
+     \nopagebreak[4]
    }
 
    \newcommand{\@ssection}[1]%        % for section*{...}
@@ -246,16 +246,16 @@
      }
    \fi
 %% For \pagestyle{myheadings}
-\renewcommand{\ps@myheadings}{
-  \renewcommand{\@oddhead}{{\sffamily\rightmark}\hfil}
-  \renewcommand{\@evenhead}{\hfil\sffamily\leftmark}
-  \renewcommand{\@oddfoot}{\hfil\textsf{\thepage}}%
-  \renewcommand{\@evenfoot}{\hspace{-\mp@margwd}\textsf{\thepage}\hfil}%
+   \renewcommand{\ps@myheadings}{
+     \renewcommand{\@oddhead}{{\sffamily\rightmark}\hfil}
+     \renewcommand{\@evenhead}{\hfil\sffamily\leftmark}
+     \renewcommand{\@oddfoot}{\hfil\textsf{\thepage}}%
+     \renewcommand{\@evenfoot}{\hspace{-\mp@margwd}\textsf{\thepage}\hfil}%
 
-  \let\@mkboth\@gobbletwo
-  \let\chaptermark\@gobble
-  \let\sectionmark\@gobble
-}
+     \let\@mkboth\@gobbletwo
+     \let\chaptermark\@gobble
+     \let\sectionmark\@gobble
+   }
 
 %% Footnote style
 %%
@@ -264,10 +264,11 @@
 %% zum Glück wieder verschwindet. Hier hat nur die Vollziffer mit dem
 %% Punkt dahinter zu stehen." (Paul Renner, Die Kunst der Typographie,
 %% p. 70)
+   \newcommand{\mp@fnsep}{.} % Footnote separator, default is a period
    \renewcommand{\@makefntext}[1]%
    {%
      \setlength{\parindent}{0mm}%
-     \makebox[1.5em][l]{\normalfont\@thefnmark.}\enspace#1%
+     \makebox[1.5em][l]{\normalfont\@thefnmark\mp@fnsep}\enspace#1%
    }
 
 %% Marginal notes
