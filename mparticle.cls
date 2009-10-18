@@ -1,6 +1,6 @@
 %%
 %% mparticle, an attempt at a fancier article style
-%% @(#) $Id: mparticle.cls,v 1.14 2008/07/08 14:43:42 mxp Exp mxp $
+%% @(#) $Id: mparticle.cls,v 1.15 2008/11/27 13:14:41 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option.
 
@@ -28,7 +28,8 @@
          \large\mdseries\upshape
          \vspace{.5em}%
          \rule{\textwidth}{.5mm}\\        
-         \@author\\\@date\\
+         \@author\\
+         \ifx\date\@empty\else\@date\fi
        \end{flushleft}
        \@thanks
        \par
@@ -43,7 +44,8 @@
        \@title\\
        \large\mdseries\upshape
        \vspace{.5em}%
-       \@author\\\@date\\
+       \@author\\
+       \ifx\date\@empty\else\@date\fi
                                 %\rule{\textwidth}{.5mm}\\
      \end{flushleft}
      \@thanks
@@ -51,6 +53,9 @@
      \vskip 1cm
      }
    \fi
+
+%% Redefine \and to be useful with the redefined \maketitle
+   \renewcommand{\and}{\\}
 
 %% It redefines |\section|.
    \renewcommand{\section}{\secdef\@section\@ssection}
