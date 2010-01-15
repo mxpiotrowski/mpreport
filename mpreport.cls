@@ -1,6 +1,6 @@
 %%
 %% mpreport, an attempt at a fancier report style
-%% @(#) $Id: mpreport.cls,v 1.18 2008/07/08 14:42:05 mxp Exp mxp $
+%% @(#) $Id: mpreport.cls,v 1.19 2008/11/27 13:11:55 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option and
 %%        loads the graphicx package.
@@ -75,7 +75,9 @@
    \renewcommand{\thechapter}{\arabic{chapter}}
    
    \renewcommand{\chapter}{%
-     \if@openright\cleardoublepage\else\clearpage\fi
+     \if@openright\clearpage{\pagestyle{empty}\cleardoublepage}%
+     \else\clearpage%
+     \fi
      \secdef\@chapter\@schapter%
      }
 
@@ -265,9 +267,14 @@
 %% Punkt dahinter zu stehen." (Paul Renner, Die Kunst der Typographie,
 %% p. 70)
    \newcommand{\mp@fnsep}{.} % Footnote separator, default is a period
-   \renewcommand{\@makefntext}[1]%
-   {%
+   \newlength{\mp@fnhangindent} % Hanging indent for footnotes
+   \newcommand{\mp@setfnhangindent}[1]{%
+     \footnotesize%
+     \setlength{\mp@fnhangindent}{#1}%
+   }
+   \renewcommand{\@makefntext}[1]{%
      \setlength{\parindent}{0mm}%
+     \hangindent=\mp@fnhangindent%
      \makebox[1.5em][l]{\normalfont\@thefnmark\mp@fnsep}\enspace#1%
    }
 
