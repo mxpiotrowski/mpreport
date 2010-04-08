@@ -1,12 +1,12 @@
 %%
-%% mparticle, an attempt at a fancier article style
-%% @(#) $Id: mparticle.cls,v 1.15 2008/11/27 13:14:41 mxp Exp mxp $
+%% mparticle, an attempt at a modern article layout
+%% @(#) $Id: mparticle.cls,v 1.16 2009/10/18 18:34:13 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option.
 
 %% The class begins by announcing itself as |mparticle.cls|.
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{mparticle}[2002/01/07 A variant article class]
+\ProvidesClass{mparticle}[2010/04/08 A variant article class]
 
 %% It passes all options on to the |article| class.
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
@@ -63,6 +63,7 @@
    \newlength{\mp@headht}
    \newcommand{\@section}[2][?]%
    {%
+     \def\@currentlabelname{#1} % for compatibility with nameref
      \refstepcounter{section}%
      \vspace{\baselineskip}%
      \pagebreak[3]%
@@ -80,6 +81,7 @@
 
    \newcommand{\@ssection}[1]%        % for section*{...}
    {%
+     \def\@currentlabelname{#1} % for compatibility with nameref
      \vspace{\baselineskip}%
      \pagebreak[3]%
      {%
@@ -183,21 +185,24 @@
 %% Dimensions
    \setlength\hoffset{-1in}
    \setlength\voffset{-1in}
-   \setlength\textwidth{12cm}
-   \setlength\textheight{.85\paperheight}
-   \setlength{\oddsidemargin}{75mm}
-   \setlength{\evensidemargin}{65mm}
+   \setlength\textwidth{.57\paperwidth}
+   \ifnum\paperheight>\paperwidth
+     \setlength\textheight{.85\paperheight} % portrait
+   \else
+     \setlength\textheight{.80\paperheight} % landscape
+   \fi
+   \setlength{\oddsidemargin}{0.357143\paperwidth}
+   \setlength{\evensidemargin}{0.309524\paperwidth}
    \pagestyle{plain} 
 
    \parindent0mm
    \parskip1ex
 
    \newlength{\mp@margwd}
-   \setlength{\mp@margwd}{55mm}
+   \setlength{\mp@margwd}{.26\paperwidth}
    \setlength{\marginparwidth}{0.85\mp@margwd}
 
    \newlength{\mp@fullwd}
    \setlength{\mp@fullwd}{\textwidth}
    \addtolength{\mp@fullwd}{\mp@margwd}
-
 \endinput
