@@ -1,13 +1,13 @@
 %%
-%% mpreport, an attempt at a fancier report style
-%% @(#) $Id: mpreport.cls,v 1.19 2008/11/27 13:11:55 mxp Exp mxp $
+%% mpreport, an attempt at a modern report layout
+%% @(#) $Id: mpreport.cls,v 1.20 2010/01/15 21:32:58 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option and
 %%        loads the graphicx package.
 
 %% The class begins by announcing itself as |mpreport.cls|.
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{mpreport}[1999/06/04 A variant report class]
+\ProvidesClass{mpreport}[2010/04/08 A variant report class]
 
 %% It passes all options on to the |report| class.
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
@@ -57,18 +57,22 @@
      \begin{flushleft}
        \null\hfill
        \vskip 2cm
-       \sffamily\bfseries\upshape\huge
+       \huge\sffamily\bfseries
        \@title\\
-       \mdseries\upshape\large
+       \large\mdseries\upshape
        \vspace{.5em}%
-       \@author, \@date\\
-                                % \rule{\textwidth}{.5mm}\\
+       \@author\\
+       \ifx\date\@empty\else\@date\fi
+                                %\rule{\textwidth}{.5mm}\\
      \end{flushleft}
      \@thanks
      \par
      \vskip 1cm
      }
    \fi
+
+%% Redefine \and to be useful with the redefined \maketitle
+   \renewcommand{\and}{\\}
 
 %% It redefines |\chapter|.
 
@@ -144,6 +148,7 @@
    \newlength{\mp@headht}
    \newcommand{\@section}[2][?]%
    {%
+     \def\@currentlabelname{#1} % for compatibility with nameref
      \refstepcounter{section}%
      \vspace{\baselineskip}%
      \pagebreak[3]%
@@ -161,6 +166,7 @@
 
    \newcommand{\@ssection}[1]%        % for section*{...}
    {%
+     \def\@currentlabelname{#1} % for compatibility with nameref
      \vspace{\baselineskip}%
      \pagebreak[3]%
      {%
@@ -192,10 +198,10 @@
    \newlength{\mp@capht}
    \newcommand{\mp@makefigcap}[2]{%
      \settoheight{\mp@capht}%
-     {\parbox[b]{.9\mp@margwd}{\raggedleft\sffamily\slshape\small#1: #2}}%
+     {\parbox[b]{.9\mp@margwd}{\raggedleft\small\slshape\sffamily#1: #2}}%
      \hspace{-\mp@margwd}%
      \vspace{-\mp@capht}%
-     \parbox[t]{.9\mp@margwd}{\raggedleft\sffamily\slshape\small#1: #2}
+     \parbox[t]{.9\mp@margwd}{\raggedleft\small\slshape\sffamily#1: #2}
      }
    
    \renewcommand{\figure}{%
@@ -315,17 +321,21 @@
 %% Dimensions
    \setlength\hoffset{-1in}
    \setlength\voffset{-1in}
-   \setlength\textwidth{120mm}
-   \setlength\textheight{.85\paperheight}
-   \setlength{\oddsidemargin}{75mm}
-   \setlength{\evensidemargin}{65mm}
-   \pagestyle{plain}
+   \setlength\textwidth{.57\paperwidth}
+   \ifnum\paperheight>\paperwidth
+     \setlength\textheight{.85\paperheight} % portrait
+   \else
+     \setlength\textheight{.80\paperheight} % landscape
+   \fi
+   \setlength{\oddsidemargin}{0.357143\paperwidth}
+   \setlength{\evensidemargin}{0.309524\paperwidth}
+   \pagestyle{plain} 
 
    \parindent0mm
    \parskip1ex
 
    \newlength{\mp@margwd}
-   \setlength{\mp@margwd}{50mm}
+   \setlength{\mp@margwd}{.26\paperwidth}
    \setlength{\marginparwidth}{0.85\mp@margwd}
 
    \newlength{\mp@fullwd}
