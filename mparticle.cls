@@ -1,6 +1,6 @@
 %%
 %% mparticle, an attempt at a modern article layout
-%% @(#) $Id: mparticle.cls,v 1.16 2009/10/18 18:34:13 mxp Exp mxp $
+%% @(#) $Id: mparticle.cls,v 1.17 2010/04/08 10:00:02 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option.
 
@@ -185,21 +185,21 @@
 %% Dimensions
    \setlength\hoffset{-1in}
    \setlength\voffset{-1in}
-   \setlength\textwidth{.57\paperwidth}
+   \setlength\textwidth{0.571429\paperwidth}         % A4: 120 mm
    \ifnum\paperheight>\paperwidth
      \setlength\textheight{.85\paperheight} % portrait
    \else
      \setlength\textheight{.80\paperheight} % landscape
    \fi
-   \setlength{\oddsidemargin}{0.357143\paperwidth}
-   \setlength{\evensidemargin}{0.309524\paperwidth}
+   \setlength{\oddsidemargin}{0.357143\paperwidth}   % A4: 75 mm
+   \setlength{\evensidemargin}{0.309524\paperwidth}  % A4: 65 mm
    \pagestyle{plain} 
 
    \parindent0mm
    \parskip1ex
 
    \newlength{\mp@margwd}
-   \setlength{\mp@margwd}{.26\paperwidth}
+   \setlength{\mp@margwd}{0.238095\paperwidth}       % A4: 50 mm
    \setlength{\marginparwidth}{0.85\mp@margwd}
 
    \newlength{\mp@fullwd}
