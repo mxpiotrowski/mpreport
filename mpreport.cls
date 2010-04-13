@@ -1,6 +1,6 @@
 %%
 %% mpreport, an attempt at a modern report layout
-%% @(#) $Id: mpreport.cls,v 1.20 2010/01/15 21:32:58 mxp Exp mxp $
+%% @(#) $Id: mpreport.cls,v 1.21 2010/04/08 10:17:09 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option and
 %%        loads the graphicx package.
@@ -321,21 +321,21 @@
 %% Dimensions
    \setlength\hoffset{-1in}
    \setlength\voffset{-1in}
-   \setlength\textwidth{.57\paperwidth}
+   \setlength\textwidth{0.571429\paperwidth}         % A4: 120 mm
    \ifnum\paperheight>\paperwidth
      \setlength\textheight{.85\paperheight} % portrait
    \else
      \setlength\textheight{.80\paperheight} % landscape
    \fi
-   \setlength{\oddsidemargin}{0.357143\paperwidth}
-   \setlength{\evensidemargin}{0.309524\paperwidth}
+   \setlength{\oddsidemargin}{0.357143\paperwidth}   % A4: 75 mm
+   \setlength{\evensidemargin}{0.309524\paperwidth}  % A4: 65 mm
    \pagestyle{plain} 
 
    \parindent0mm
    \parskip1ex
 
    \newlength{\mp@margwd}
-   \setlength{\mp@margwd}{.26\paperwidth}
+   \setlength{\mp@margwd}{0.238095\paperwidth}       % A4: 50 mm
    \setlength{\marginparwidth}{0.85\mp@margwd}
 
    \newlength{\mp@fullwd}
