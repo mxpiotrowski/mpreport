@@ -1,6 +1,6 @@
 %%
 %% mparticle, an attempt at a modern article layout
-%% @(#) $Id: mparticle.cls,v 1.17 2010/04/08 10:00:02 mxp Exp mxp $
+%% @(#) $Id: mparticle.cls,v 1.18 2010/04/13 22:47:32 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option.
 
@@ -54,10 +54,10 @@
      }
    \fi
 
-%% Redefine \and to be useful with the redefined \maketitle
+%% Redefine |\and| to be useful with the redefined |\maketitle|
    \renewcommand{\and}{\\}
 
-%% It redefines |\section|.
+%% Redefine |\section|
    \renewcommand{\section}{\secdef\@section\@ssection}
 
    \newlength{\mp@headht}
@@ -94,14 +94,14 @@
      \par
    }
 
-%% It redefines |\subsection|.
+%% Redefine |\subsection|
    \renewcommand{\subsection}{%
      \@startsection
      {subsection}{2}{0pt}{-1.5ex plus -1ex minus -.2ex}%
      {1ex plus .2ex}{\sffamily\bfseries\normalsize}%
      }
 
-%% It redefines |\subsubsection|.
+%% Redefine |\subsubsection|
    \renewcommand{\subsubsection}{%
      \@startsection
      {subsubsection}{3}{0pt}{-1.5ex plus -1ex minus -.2ex}%
@@ -112,10 +112,14 @@
 %% figure/table environment)
    \newlength{\mp@capht}
    \newcommand{\mp@makefigcap}[2]{%
-     \settoheight{\mp@capht}%
-     {\parbox[b]{.9\mp@margwd}{\raggedleft\small\slshape\sffamily#1: #2}}%
+     % Measure height of caption
+     \settoheight{\mp@capht}{%
+       \parbox[b]{.9\mp@margwd}{%
+         \def\footnotemark{\relax}% Avoid incrementing the footnote counter
+         \raggedleft\small\slshape\sffamily#1: #2}}%
+     % Actually typeset the caption
      \hspace{-\mp@margwd}%
-     \vspace{-\mp@capht}%
+     \vspace*{-\mp@capht}%
      \parbox[t]{.9\mp@margwd}{\raggedleft\small\slshape\sffamily#1: #2}
      }
    
@@ -142,14 +146,17 @@
 %% Punkt dahinter zu stehen." (Paul Renner, Die Kunst der Typographie,
 %% p. 70)
    \newcommand{\mp@fnsep}{.} % Footnote separator, default is a period
-   \renewcommand{\@makefntext}[1]%
-   {%
+   \renewcommand{\@makefntext}[1]{%
      \setlength{\parindent}{0mm}%
      \makebox[1.5em][l]{\normalfont\@thefnmark\mp@fnsep}\enspace#1%
    }
 
+%% Let the footnote mark in the text inherit the font and style of
+%% the text.
+   \renewcommand\@makefnmark{\textsuperscript{\mdseries\@thefnmark}}
+
 %% Marginal notes
-%% We redefine the \marginpar command so that marginpars always appear
+%% We redefine the |\marginpar| command so that marginpars always appear
 %% in the left margin.  Cf.
 %% <http://www.tug.org/tex-archive/support/dbtex/refman.sty>
 %% <http://tug.ctan.org/tex-archive/macros/latex/contrib/refman/layout_e.pdf>
