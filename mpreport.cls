@@ -1,6 +1,6 @@
 %%
 %% mpreport, an attempt at a modern report layout
-%% @(#) $Id: mpreport.cls,v 1.21 2010/04/08 10:17:09 mxp Exp mxp $
+%% @(#) $Id: mpreport.cls,v 1.22 2010/04/13 22:47:52 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option and
 %%        loads the graphicx package.
@@ -71,11 +71,10 @@
      }
    \fi
 
-%% Redefine \and to be useful with the redefined \maketitle
+%% Redefine |\and| to be useful with the redefined |\maketitle|
    \renewcommand{\and}{\\}
 
-%% It redefines |\chapter|.
-
+%% Redefine |\chapter|
    \renewcommand{\thechapter}{\arabic{chapter}}
    
    \renewcommand{\chapter}{%
@@ -142,7 +141,7 @@
        }%
      }
      
-%% It redefines |\section|.
+%% Redefine |\section|
    \renewcommand{\section}{\secdef\@section\@ssection}
 
    \newlength{\mp@headht}
@@ -179,14 +178,14 @@
      \par
    }
 
-%% It redefines |\subsection|.
+%% Redefine |\subsection|
    \renewcommand{\subsection}{%
      \@startsection
      {subsection}{2}{0pt}{-1.5ex plus -1ex minus -.2ex}%
      {1ex plus .2ex}{\sffamily\bfseries\normalsize}%
      }
 
-%% It redefines |\subsubsection|.
+%% Redefine |\subsubsection|
    \renewcommand{\subsubsection}{%
      \@startsection
      {subsubsection}{3}{0pt}{-1.5ex plus -1ex minus -.2ex}%
@@ -197,10 +196,14 @@
 %% figure/table environment)
    \newlength{\mp@capht}
    \newcommand{\mp@makefigcap}[2]{%
-     \settoheight{\mp@capht}%
-     {\parbox[b]{.9\mp@margwd}{\raggedleft\small\slshape\sffamily#1: #2}}%
+     % Measure height of caption
+     \settoheight{\mp@capht}{%
+       \parbox[b]{.9\mp@margwd}{%
+         \def\footnotemark{\relax}% Avoid incrementing the footnote counter
+         \raggedleft\small\slshape\sffamily#1: #2}}%
+     % Actually typeset the caption
      \hspace{-\mp@margwd}%
-     \vspace{-\mp@capht}%
+     \vspace*{-\mp@capht}%
      \parbox[t]{.9\mp@margwd}{\raggedleft\small\slshape\sffamily#1: #2}
      }
    
@@ -212,14 +215,14 @@
      }
 
 %% Page style
-%% For \pagestyle{plain}
+%% For |\pagestyle{plain}|
    \renewcommand{\ps@plain}{%
      \renewcommand{\@oddhead}{}%
      \renewcommand{\@evenhead}{}%
      \renewcommand{\@oddfoot}{\hfil\textsf{\thepage}}%
      \renewcommand{\@evenfoot}{\hspace{-\mp@margwd}\textsf{\thepage}\hfil}%
      }
-%% For \pagestyle{headings}
+%% For |\pagestyle{headings}|
    \if@twoside
      \renewcommand{\ps@headings}{%
        \renewcommand{\@oddhead}{{\sffamily\rightmark}\hfil}%
@@ -253,7 +256,7 @@
            ##1}}%
      }
    \fi
-%% For \pagestyle{myheadings}
+%% For |\pagestyle{myheadings}|
    \renewcommand{\ps@myheadings}{
      \renewcommand{\@oddhead}{{\sffamily\rightmark}\hfil}
      \renewcommand{\@evenhead}{\hfil\sffamily\leftmark}
@@ -284,8 +287,12 @@
      \makebox[1.5em][l]{\normalfont\@thefnmark\mp@fnsep}\enspace#1%
    }
 
+%% Let the footnote mark in the text inherit the font and style of
+%% the text.
+   \renewcommand\@makefnmark{\textsuperscript{\mdseries\@thefnmark}}
+
 %% Marginal notes
-%% We redefine the \marginpar command so that marginpars always appear
+%% We redefine the |\marginpar| command so that marginpars always appear
 %% in the left margin.  Cf.
 %% <http://www.tug.org/tex-archive/support/dbtex/refman.sty>
 %% <http://tug.ctan.org/tex-archive/macros/latex/contrib/refman/layout_e.pdf>
