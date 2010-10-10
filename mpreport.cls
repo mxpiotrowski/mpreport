@@ -1,6 +1,6 @@
 %%
 %% mpreport, an attempt at a modern report layout
-%% @(#) $Id: mpreport.cls,v 1.22 2010/04/13 22:47:52 mxp Exp mxp $
+%% @(#) $Id: mpreport.cls,v 1.23 2010/06/21 12:35:40 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option and
 %%        loads the graphicx package.
@@ -18,6 +18,10 @@
 
 %% We also need the |ifthen| package.
 \RequirePackage{ifthen}
+
+%% Load |geometry| now; if it's loaded in the document, it'll mess up
+%% the layout.
+\RequirePackage{geometry}
 
 %% For your convenience we also load |graphicx|--you typically need it 
 %% in reports.
@@ -119,11 +123,12 @@
 
    \renewcommand{\@schapter}[1]{%        % for chapter*{...}
      {%
-       \newpage%
+       \clearpage%
        \parskip1ex%
+       \parindent \z@ \raggedright \normalfont%
        \par%
        \hspace{-\mp@margwd}\rule{\mp@fullwd}{.25mm}%
-       \vspace{-\baselineskip}\par%
+       \vspace{-\baselineskip}\\[2mm]%
        \hspace{-\mp@margwd}\rule{\mp@margwd}{2mm}%
        \par\hspace{-\mp@margwd}%
        % don't typeset the chapter number
@@ -156,7 +161,7 @@
        \hspace{-\mp@margwd}\rule{\mp@fullwd}{.25mm}%
        \par\vspace*{-.5\baselineskip}%
        \hspace{-\mp@margwd}%
-       \sffamily\bfseries\large\thesection~#2
+       \sffamily\bfseries\large\thesection~#2\par\nobreak
      }%
      \sectionmark{#1}%
      \addcontentsline{toc}{section}{\protect\numberline{\thesection} #1}%
@@ -173,7 +178,7 @@
        \hspace{-\mp@margwd}\rule{\mp@fullwd}{.25mm}%
        \par\vspace*{-.5\baselineskip}%
        \hspace{-\mp@margwd}%
-       \sffamily\bfseries\large#1
+       \sffamily\bfseries\large#1\par\nobreak
      }%
      \par
    }
@@ -220,7 +225,7 @@
      \renewcommand{\@oddhead}{}%
      \renewcommand{\@evenhead}{}%
      \renewcommand{\@oddfoot}{\hfil\textsf{\thepage}}%
-     \renewcommand{\@evenfoot}{\hspace{-\mp@margwd}\textsf{\thepage}\hfil}%
+     \renewcommand{\@evenfoot}{\hspace{-\marginparwidth}\textsf{\thepage}\hfil}%
      }
 %% For |\pagestyle{headings}|
    \if@twoside
@@ -327,7 +332,7 @@
 
 %% Dimensions
    \setlength\hoffset{-1in}
-   \setlength\voffset{-1in}
+   \setlength\voffset{-0.0548822\paperheight} % odd number due to |geometry|
    \setlength\textwidth{0.571429\paperwidth}         % A4: 120 mm
    \ifnum\paperheight>\paperwidth
      \setlength\textheight{.85\paperheight} % portrait
