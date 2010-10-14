@@ -1,13 +1,12 @@
 %%
 %% mpreport, an attempt at a modern report layout
-%% @(#) $Id: mpreport.cls,v 1.23 2010/06/21 12:35:40 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option and
 %%        loads the graphicx package.
 
 %% The class begins by announcing itself as |mpreport.cls|.
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{mpreport}[2010/04/08 A variant report class]
+\ProvidesClass{mpreport}[2010/10/14 A variant report class]
 
 %% It passes all options on to the |report| class.
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}

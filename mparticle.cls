@@ -1,6 +1,5 @@
 %%
 %% mparticle, an attempt at a modern article layout
-%% @(#) $Id: mparticle.cls,v 1.18 2010/04/13 22:47:32 mxp Exp mxp $
 
 %% NOTE:  This class automatically specifies the a4paper option.
 
@@ -17,6 +16,12 @@
 
 %% We also need the |ifthen| package.
 \RequirePackage{ifthen}
+
+%% Load |geometry| now; if it's loaded in the document, it'll mess up
+%% the layout.
+\RequirePackage{geometry}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% The class then redefines |\maketitle|.
    \if@titlepage
@@ -72,7 +77,7 @@
        \hspace{-\mp@margwd}\rule{\mp@fullwd}{.25mm}%
        \par\vspace*{-.5\baselineskip}%
        \hspace{-\mp@margwd}%
-       \sffamily\bfseries\large\thesection~#2
+       \sffamily\bfseries\large\thesection~#2\par\nobreak
      }%
      \sectionmark{#1}%
      \addcontentsline{toc}{section}{\protect\numberline{\thesection} #1}%
@@ -89,7 +94,7 @@
        \hspace{-\mp@margwd}\rule{\mp@fullwd}{.25mm}%
        \par\vspace*{-.5\baselineskip}%
        \hspace{-\mp@margwd}%
-       \sffamily\bfseries\large#1
+       \sffamily\bfseries\large#1\par\nobreak
      }%
      \par
    }
@@ -146,8 +151,14 @@
 %% Punkt dahinter zu stehen." (Paul Renner, Die Kunst der Typographie,
 %% p. 70)
    \newcommand{\mp@fnsep}{.} % Footnote separator, default is a period
+   \newlength{\mp@fnhangindent} % Hanging indent for footnotes
+   \newcommand{\mp@setfnhangindent}[1]{%
+     \footnotesize%
+     \setlength{\mp@fnhangindent}{#1}%
+   }
    \renewcommand{\@makefntext}[1]{%
      \setlength{\parindent}{0mm}%
+     \hangindent=\mp@fnhangindent%
      \makebox[1.5em][l]{\normalfont\@thefnmark\mp@fnsep}\enspace#1%
    }
 
@@ -191,7 +202,7 @@
 
 %% Dimensions
    \setlength\hoffset{-1in}
-   \setlength\voffset{-1in}
+   \setlength\voffset{-0.0548822\paperheight} % odd number due to |geometry|
    \setlength\textwidth{0.571429\paperwidth}         % A4: 120 mm
    \ifnum\paperheight>\paperwidth
      \setlength\textheight{.85\paperheight} % portrait
