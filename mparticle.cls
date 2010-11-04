@@ -5,7 +5,7 @@
 
 %% The class begins by announcing itself as |mparticle.cls|.
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{mparticle}[2010/04/08 A variant article class]
+\ProvidesClass{mparticle}[2010/11/04 A variant article class]
 
 %% It passes all options on to the |article| class.
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
