@@ -1,5 +1,5 @@
-%%
 %% mpreport, an attempt at a modern report layout
+%% Michael Piotrowski <mxp@dynalabs.de>
 
 %% NOTE:  This class automatically specifies the a4paper option and
 %%        loads the graphicx package.

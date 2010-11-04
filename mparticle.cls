@@ -1,5 +1,5 @@
-%%
 %% mparticle, an attempt at a modern article layout
+%% Michael Piotrowski <mxp@dynalabs.de>
 
 %% NOTE:  This class automatically specifies the a4paper option.
 
