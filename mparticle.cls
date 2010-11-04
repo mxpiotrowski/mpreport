@@ -80,7 +80,7 @@
        \sffamily\bfseries\large\thesection~#2\par\nobreak
      }%
      \sectionmark{#1}%
-     \addcontentsline{toc}{section}{\protect\numberline{\thesection} #1}%
+     \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}%
      \nopagebreak[4]
    }
 

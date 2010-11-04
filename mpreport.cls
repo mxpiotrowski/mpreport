@@ -115,7 +115,7 @@
            \parbox[b]{.9\textwidth}{\raggedleft\sffamily\bfseries\Huge
              #2}}}%
        \chaptermark{#1}%
-       \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter} #1}%
+       \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
        \par\nobreak%
        \vskip\mp@margwd%
        }}
@@ -163,7 +163,7 @@
        \sffamily\bfseries\large\thesection~#2\par\nobreak
      }%
      \sectionmark{#1}%
-     \addcontentsline{toc}{section}{\protect\numberline{\thesection} #1}%
+     \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}%
      \nopagebreak[4]
    }
 
