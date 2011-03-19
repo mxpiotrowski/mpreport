@@ -224,7 +224,7 @@
      \renewcommand{\@oddhead}{}%
      \renewcommand{\@evenhead}{}%
      \renewcommand{\@oddfoot}{\hfil\textsf{\thepage}}%
-     \renewcommand{\@evenfoot}{\hspace{-\marginparwidth}\textsf{\thepage}\hfil}%
+     \renewcommand{\@evenfoot}{\hspace{-\mp@margwd}\textsf{\thepage}\hfil}%
      }
 %% For |\pagestyle{headings}|
    \if@twoside
