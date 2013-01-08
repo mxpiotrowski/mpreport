@@ -43,7 +43,10 @@
 
        \begin{flushright}
          \sffamily\bfseries\upshape%
-         \large\@author\\[1ex]\huge\@title\\[1ex]\normalsize\@date
+         %\large\@author\\[1ex]\huge\@title\\[1ex]\normalsize\@date
+         \ifx\author\@empty\else\large\@author\vspace{1ex}\par\fi%
+         \huge\@title\\[1ex]%
+         \normalsize\@date
          \vfill
        \end{flushright}
 
@@ -64,7 +67,7 @@
        \@title\\
        \large\mdseries\upshape
        \vspace{.5em}%
-       \@author\\
+       \ifx\author\@empty\else\@author\par\fi
        \ifx\date\@empty\else\@date\fi
                                 %\rule{\textwidth}{.5mm}\\
      \end{flushleft}

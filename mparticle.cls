@@ -33,7 +33,7 @@
          \large\mdseries\upshape
          \vspace{.5em}%
          \rule{\textwidth}{.5mm}\\        
-         \@author\\
+         \ifx\author\@empty\else\@author\par\fi
          \ifx\date\@empty\else\@date\fi
        \end{flushleft}
        \@thanks
@@ -42,6 +42,11 @@
      }
    \else
    \renewcommand{\maketitle}{%
+  \begingroup
+    \renewcommand\thefootnote{\@fnsymbol\c@footnote}%
+    \def\@makefnmark{\rlap{\@textsuperscript{\normalsize\@thefnmark}}}%
+    \long\def\@makefntext##1{\noindent
+      {\normalsize\@thefnmark}\enspace##1}%
      \begin{flushleft}
        \null\hfill
        \vskip 2cm
@@ -49,13 +54,27 @@
        \@title\\
        \large\mdseries\upshape
        \vspace{.5em}%
-       \@author\\
+       %\@author\\
+       \ifx\author\@empty\else\@author\par\fi
        \ifx\date\@empty\else\@date\fi
                                 %\rule{\textwidth}{.5mm}\\
      \end{flushleft}
      \@thanks
      \par
      \vskip 1cm
+  \endgroup
+  \setcounter{footnote}{0}%
+  \global\let\thanks\relax
+  \global\let\maketitle\relax
+  \global\let\@maketitle\relax
+  \global\let\@thanks\@empty
+  \global\let\@author\@empty
+  \global\let\@date\@empty
+  \global\let\@title\@empty
+  \global\let\title\relax
+  \global\let\author\relax
+  \global\let\date\relax
+  \global\let\and\relax
      }
    \fi
 
