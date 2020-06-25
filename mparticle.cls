@@ -5,7 +5,7 @@
 
 %% The class begins by announcing itself as |mparticle.cls|.
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{mparticle}[2010/11/04 A variant article class]
+\ProvidesClass{mparticle}[2020/06/25 A variant article class]
 
 %% It passes all options on to the |article| class.
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
@@ -23,6 +23,11 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\def\@subtitle{}
+\def\subtitle#1{\gdef\@subtitle{#1}}
+\def\subtitlefont#1{\def\st@font{#1}}
+\def\st@font{\LARGE\mdseries}
+
 %% The class then redefines |\maketitle|.
    \if@titlepage
    \renewcommand{\maketitle}{%
@@ -30,6 +35,8 @@
        \begin{flushleft}
          \huge\sffamily\bfseries
          \@title\\
+         {\ifx\@subtitle\@empty\else
+           \vskip.5em \st@font \@subtitle \par \fi}
          \large\mdseries\upshape
          \vspace{.5em}%
          \rule{\textwidth}{.5mm}\\        
@@ -39,43 +46,45 @@
        \@thanks
        \par
      \end{titlepage}%
-     }
+   }
    \else
    \renewcommand{\maketitle}{%
-  \begingroup
-    \renewcommand\thefootnote{\@fnsymbol\c@footnote}%
-    \def\@makefnmark{\rlap{\@textsuperscript{\normalsize\@thefnmark}}}%
-    \long\def\@makefntext##1{\noindent
-      {\normalsize\@thefnmark}\enspace##1}%
+     \begingroup
+     \renewcommand\thefootnote{\@fnsymbol\c@footnote}%
+     \def\@makefnmark{\rlap{\@textsuperscript{\normalsize\@thefnmark}}}%
+     \long\def\@makefntext##1{\noindent
+       {\normalsize\@thefnmark}\enspace##1}%
      \begin{flushleft}
        \null\hfill
        \vskip 2cm
        \huge\sffamily\bfseries
        \@title\\
+       {\ifx\@subtitle\@empty\else
+         \vskip.5em \st@font \@subtitle \par \fi}
        \large\mdseries\upshape
        \vspace{.5em}%
-       %\@author\\
+       % \@author\\
        \ifx\author\@empty\else\@author\par\fi
        \ifx\date\@empty\else\@date\fi
-                                %\rule{\textwidth}{.5mm}\\
+       % \rule{\textwidth}{.5mm}\\
      \end{flushleft}
      \@thanks
      \par
      \vskip 1cm
-  \endgroup
-  \setcounter{footnote}{0}%
-  \global\let\thanks\relax
-  \global\let\maketitle\relax
-  \global\let\@maketitle\relax
-  \global\let\@thanks\@empty
-  \global\let\@author\@empty
-  \global\let\@date\@empty
-  \global\let\@title\@empty
-  \global\let\title\relax
-  \global\let\author\relax
-  \global\let\date\relax
-  \global\let\and\relax
-     }
+     \endgroup
+     \setcounter{footnote}{0}%
+     \global\let\thanks\relax
+     \global\let\maketitle\relax
+     \global\let\@maketitle\relax
+     \global\let\@thanks\@empty
+     \global\let\@author\@empty
+     \global\let\@date\@empty
+     \global\let\@title\@empty
+     \global\let\title\relax
+     \global\let\author\relax
+     \global\let\date\relax
+     \global\let\and\relax
+   }
    \fi
 
 %% Redefine |\and| to be useful with the redefined |\maketitle|

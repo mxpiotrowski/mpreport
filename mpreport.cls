@@ -6,7 +6,7 @@
 
 %% The class begins by announcing itself as |mpreport.cls|.
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{mpreport}[2010/11/04 A variant report class]
+\ProvidesClass{mpreport}[2020/06/25 A variant report class]
 
 %% It passes all options on to the |report| class.
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
@@ -28,12 +28,17 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\def\@subtitle{}
+\def\subtitle#1{\gdef\@subtitle{#1}}
+\def\subtitlefont#1{\def\st@font{#1}}
+\def\st@font{\LARGE\mdseries}
+
 %% The class then redefines |\maketitle|.
    \if@titlepage
    \renewcommand{\maketitle}{%
      \begin{titlepage}%
        % top line
-       
+
        \hspace{-\mp@margwd}\rule{\mp@fullwd}{.25mm}%
        \vspace{-\baselineskip}\vspace{.25mm}%
        \par\hspace{-\mp@margwd}\rule{\mp@margwd}{2mm}%
@@ -43,9 +48,11 @@
 
        \begin{flushright}
          \sffamily\bfseries\upshape%
-         %\large\@author\\[1ex]\huge\@title\\[1ex]\normalsize\@date
+         % \large\@author\\[1ex]\huge\@title\\[1ex]\normalsize\@date
          \ifx\author\@empty\else\large\@author\vspace{1ex}\par\fi%
          \huge\@title\\[1ex]%
+         {\ifx\@subtitle\@empty\else
+           \vskip.5em \st@font \@subtitle \par \fi}
          \normalsize\@date
          \vfill
        \end{flushright}
@@ -57,7 +64,7 @@
        \hspace{-\mp@margwd}%
        \rule{\mp@fullwd}{.25mm}%
      \end{titlepage}%
-     }
+   }
    \else
    \renewcommand{\maketitle}{%
      \begin{flushleft}
@@ -65,16 +72,18 @@
        \vskip 2cm
        \huge\sffamily\bfseries
        \@title\\
+       {\ifx\@subtitle\@empty\else
+         \vskip.5em \st@font \@subtitle \par \fi}
        \large\mdseries\upshape
        \vspace{.5em}%
        \ifx\author\@empty\else\@author\par\fi
        \ifx\date\@empty\else\@date\fi
-                                %\rule{\textwidth}{.5mm}\\
+       % \rule{\textwidth}{.5mm}\\
      \end{flushleft}
      \@thanks
      \par
      \vskip 1cm
-     }
+   }
    \fi
 
 %% Redefine |\and| to be useful with the redefined |\maketitle|
