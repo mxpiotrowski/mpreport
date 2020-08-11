@@ -109,7 +109,7 @@
      }%
      \sectionmark{#1}%
      \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}%
-     \nopagebreak[4]
+     \@afterheading%
    }
 
    \newcommand{\@ssection}[1]%        % for section*{...}
@@ -122,7 +122,8 @@
        \hspace{-\mp@margwd}\rule{\mp@fullwd}{.25mm}%
        \par\vspace*{-.5\baselineskip}%
        \hspace{-\mp@margwd}%
-       \sffamily\bfseries\large#1\par\nobreak
+       \sffamily\bfseries\large#1\par\nobreak%
+       \@afterheading
      }%
      \par
    }
