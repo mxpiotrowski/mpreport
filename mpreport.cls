@@ -6,7 +6,7 @@
 
 %% The class begins by announcing itself as |mpreport.cls|.
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{mpreport}[2020/06/25 A variant report class]
+\ProvidesClass{mpreport}[2020/08/11 A variant report class]
 
 %% It passes all options on to the |report| class.
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
