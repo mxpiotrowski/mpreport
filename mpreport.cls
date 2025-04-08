@@ -6,7 +6,7 @@
 
 %% The class begins by announcing itself as |mpreport.cls|.
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{mpreport}[2020/08/11 A variant report class]
+\ProvidesClass{mpreport}[2025/04/08 A variant report class]
 
 %% It passes all options on to the |report| class.
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
@@ -165,7 +165,7 @@
    {%
      \def\@currentlabelname{#1} % for compatibility with nameref
      \refstepcounter{section}%
-     \vspace{\baselineskip}%
+     \par%
      \pagebreak[3]%
      {%
        \parskip1.5ex%
@@ -182,7 +182,7 @@
    \newcommand{\@ssection}[1]%        % for section*{...}
    {%
      \def\@currentlabelname{#1} % for compatibility with nameref
-     \vspace{\baselineskip}%
+     \par%
      \pagebreak[3]%
      {%
        \parskip1.5ex%
